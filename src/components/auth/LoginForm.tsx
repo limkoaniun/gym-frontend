@@ -5,7 +5,7 @@ import {useContext} from "react";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useRouter} from 'next/navigation';
-import {Alert, Box} from '@mui/material';
+import {Alert, AlertDescription} from "@/components/ui/alert";
 
 import {type LoginFormData, LoginSchema} from "@/lib/schemas";
 import {login} from "@/lib/api/auth";
@@ -80,15 +80,14 @@ export function LoginForm() {
             <LoginHeader/>
 
             {error && (
-                <Alert severity="error" sx={{mb: 2}}>
-                    {error}
+                <Alert variant="destructive" className="mb-4">
+                    <AlertDescription>{error}</AlertDescription>
                 </Alert>
             )}
 
-            <Box
-                component="form"
+            <form
                 onSubmit={form.handleSubmit(onSubmitActualLogin)}
-                sx={{display: 'flex', flexDirection: 'column', gap: 2}}
+                className="flex flex-col gap-4"
             >
                 <EmailStep
                     control={form.control}
@@ -121,7 +120,7 @@ export function LoginForm() {
                         text="Login"
                     />
                 )}
-            </Box>
+            </form>
 
             <LoginFooter/>
             <SocialMediaButtons/>

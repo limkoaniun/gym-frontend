@@ -1,46 +1,28 @@
 import Link from 'next/link';
-import { Box, Typography, Divider } from '@mui/material';
-import { styled } from '@mui/material/styles';
-
-const StyledDivider = styled(Divider)(({ theme }) => ({
-    margin: theme.spacing(3, 0),
-    '&::before, &::after': {
-        borderColor: 'rgba(255, 255, 255, 0.2)', // Light divider
-    },
-}));
 
 export function LoginFooter() {
     return (
         <>
-            <Box sx={{ textAlign: 'center', mt: 2 }}>
-                <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+            <div className="text-center mt-4">
+                <p className="text-sm text-white/80">
                     Don't have an account?{' '}
                     <Link
                         href="/signup"
-                        style={{
-                            color: 'inherit',
-                            textDecoration: 'none',
-                            fontWeight: 500
-                        }}
+                        className="text-primary font-medium hover:underline"
                     >
-                        <Box
-                            component="span"
-                            sx={{
-                                color: 'primary.main',
-                                '&:hover': { textDecoration: 'underline' }
-                            }}
-                        >
-                            Sign up
-                        </Box>
+                        Sign up
                     </Link>
-                </Typography>
-            </Box>
+                </p>
+            </div>
 
-            <StyledDivider>
-                <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                    OR
-                </Typography>
-            </StyledDivider>
+            <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-white/20" />
+                </div>
+                <div className="relative flex justify-center text-xs">
+                    <span className="bg-transparent px-2 text-white/60">OR</span>
+                </div>
+            </div>
         </>
     );
 }

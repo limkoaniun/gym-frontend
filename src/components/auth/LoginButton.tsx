@@ -1,5 +1,5 @@
-import { CircularProgress } from '@mui/material';
-import { StyledButton } from "./StyledComponents";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 interface LoginButtonProps {
     type: 'button' | 'submit';
@@ -17,22 +17,20 @@ export function LoginButton({
                                 text
                             }: LoginButtonProps) {
     return (
-        <StyledButton
+        <Button
             type={type}
             onClick={onClick}
-            variant="contained"
-            fullWidth
             disabled={isLoading}
-            sx={{ mt: 1 }}
+            className="h-12 rounded-lg text-base font-medium mt-2 w-full"
         >
             {isLoading ? (
                 <>
-                    <CircularProgress size={20} sx={{ mr: 1 }} />
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                     {loadingText}
                 </>
             ) : (
                 text
             )}
-        </StyledButton>
+        </Button>
     );
 }
