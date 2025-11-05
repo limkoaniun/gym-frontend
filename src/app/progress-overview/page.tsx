@@ -133,4 +133,4 @@ export default function ProgressOverviewPage() {
 }
 
 // Added this dummy array to prevent build error, as it was referenced in the JSX
-const placeholderSchedule: any[] = [];
+const placeholderSchedule: never[] = [];

@@ -271,7 +271,7 @@ export default function TrainingSchedulePage() {
         });
       } finally {
         setIsLoadingAIPlan(false);
-        router.replace('/training-schedule', { shallow: true } as any);
+        router.replace('/training-schedule');
       }
     };
 
@@ -322,8 +322,8 @@ export default function TrainingSchedulePage() {
       } else {
         setActiveEquipment(null);
       }
-      if (!generatePlanForId) { 
-        router.replace('/training-schedule', { shallow: true } as any);
+      if (!generatePlanForId) {
+        router.replace('/training-schedule');
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -391,9 +391,8 @@ export default function TrainingSchedulePage() {
                   <Image
                     src={activeEquipment.imageUrl}
                     alt={activeEquipment.name}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-md"
+                    fill
+                    className="object-cover rounded-md"
                     data-ai-hint={activeEquipment.imageHint}
                   />
                 </div>
@@ -414,7 +413,7 @@ export default function TrainingSchedulePage() {
                 {currentlyScheduledEquipmentDetails.map(equip => (
                   <Card key={equip.id} className="w-full sm:w-auto sm:max-w-[150px] flex-shrink-0 shadow-md">
                     <div className="relative w-full aspect-square sm:w-[150px] sm:h-[150px]">
-                       <Image src={equip.imageUrl} alt={equip.name} layout="fill" objectFit="cover" className="rounded-t-md" data-ai-hint={equip.imageHint} />
+                       <Image src={equip.imageUrl} alt={equip.name} fill className="object-cover rounded-t-md" data-ai-hint={equip.imageHint} />
                     </div>
                     <CardContent className="p-2 text-center">
                       <p className="text-xs font-medium truncate">{equip.name}</p>
@@ -451,8 +450,8 @@ export default function TrainingSchedulePage() {
                           <Image
                             src={entry.image}
                             alt={entry.title}
-                            layout="fill"
-                            objectFit="cover"
+                            fill
+                            className="object-cover"
                             data-ai-hint={entry.imageHint || 'workout fitness'}
                           />
                         </div>
