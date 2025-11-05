@@ -154,8 +154,8 @@ export default function MyEquipmentPage() {
                       <Image
                         src={item.imageUrl}
                         alt={item.name}
-                        layout="fill"
-                        objectFit="cover"
+                        fill
+                        className="object-cover"
                         data-ai-hint={item.imageHint}
                       />
                     </div>

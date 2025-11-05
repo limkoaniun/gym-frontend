@@ -12,7 +12,7 @@ interface ImagePreviewProps {
 
 export const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, onClear, disabled }) => (
     <div className="relative p-1 border border-border rounded-lg w-full max-w-md mx-auto aspect-video bg-muted/20 shadow-md">
-        <Image src={imageUrl} alt="Selected preview" layout="fill" objectFit="contain" className="rounded-md p-1" />
+        <Image src={imageUrl} alt="Selected preview" fill className="object-contain rounded-md p-1" />
         <Button
             type="button"
             variant="destructive"
