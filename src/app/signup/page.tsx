@@ -9,7 +9,7 @@ import {Separator} from '@/components/ui/separator';
 import React, {useState} from "react";
 import {signup} from "@/lib/api/auth";
 import {SignupPayload} from "@/lib/interfaces";
-import SocialMediaButtons from "@/components/ui/social-media";
+import SocialMediaButtons from "@/components/ui/socialMedia";
 import {useRouter} from "next/navigation";
 import {toast} from "react-toastify";
 
