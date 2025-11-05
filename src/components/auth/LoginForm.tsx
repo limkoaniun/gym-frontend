@@ -14,7 +14,7 @@ import {LoginHeader} from "./LoginHeader";
 import {EmailStep} from "./EmailStep";
 import {PasswordStep} from "./PasswordStep";
 import {LoginFooter} from "./LoginFooter";
-import SocialMediaButtons from "@/components/ui/social-media";
+import SocialMediaButtons from "@/components/ui/socialMedia";
 import {LoginButton} from "@/components/auth/LoginButton";
 import {LoginUserContext} from "@/components/auth/LoginUserContext";
 

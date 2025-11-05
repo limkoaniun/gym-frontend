@@ -13,11 +13,11 @@ import { Bar, BarChart, Line, LineChart, XAxis, YAxis, CartesianGrid, Responsive
 import { format, parseISO, isSameDay, startOfWeek, addDays, formatISO } from 'date-fns';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { type GenerateWorkoutPlanInput, type GenerateWorkoutPlanOutput } from '@/ai/flows/generate-workout-plan-flow';
+import { type GenerateWorkoutPlanInput, type GenerateWorkoutPlanOutput } from '@/ai/flows/generateWorkoutPlanFlow';
 
 // Remove the actual import if we are faking the call, or keep it if types are still needed and backend might be used later.
 // For now, keeping it for type safety.
-// import { generateWorkoutPlan } from '@/ai/flows/generate-workout-plan-flow';
+// import { generateWorkoutPlan } from '@/ai/flows/generateWorkoutPlanFlow';
 
 
 interface Equipment {
@@ -271,7 +271,7 @@ export default function TrainingSchedulePage() {
         });
       } finally {
         setIsLoadingAIPlan(false);
-        router.replace('/training-schedule');
+        router.replace('/trainingSchedule');
       }
     };
 
@@ -323,7 +323,7 @@ export default function TrainingSchedulePage() {
         setActiveEquipment(null);
       }
       if (!generatePlanForId) {
-        router.replace('/training-schedule');
+        router.replace('/trainingSchedule');
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

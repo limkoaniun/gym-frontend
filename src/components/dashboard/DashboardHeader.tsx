@@ -21,13 +21,13 @@ export const DashboardHeader = () => {
                 <Button variant="outline" size="sm">
                     {`Welcome, ${username}!`}
                 </Button>
-                <Link href="/my-trainers">
+                <Link href="/myTrainers">
                     <Button variant="outline" size="sm">
                         <Dumbbell className="mr-2 h-4 w-4" />
                         My Equipment
                     </Button>
                 </Link>
-                <Link href="/training-schedule">
+                <Link href="/trainingSchedule">
                     <Button variant="outline" size="sm">
                         <CalendarDays className="mr-2 h-4 w-4" />
                         Schedule & Progress
