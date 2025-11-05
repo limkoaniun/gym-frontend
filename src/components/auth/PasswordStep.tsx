@@ -1,6 +1,7 @@
 import { Controller, Control, FieldErrors } from "react-hook-form";
-import { StyledTextField } from "./StyledComponents";
+import { Input } from "@/components/ui/input";
 import { type LoginFormData } from "@/lib/schemas";
+import { cn } from "@/lib/utils";
 
 interface PasswordStepProps {
     control: Control<LoginFormData>;
@@ -10,21 +11,27 @@ interface PasswordStepProps {
 
 export function PasswordStep({ control, errors, isLoading }: PasswordStepProps) {
     return (
-        <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-                <StyledTextField
-                    {...field}
-                    type="password"
-                    placeholder="Password"
-                    fullWidth
-                    disabled={isLoading}
-                    error={!!errors.password}
-                    helperText={errors.password?.message}
-                    variant="outlined"
-                />
+        <div className="space-y-2">
+            <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                    <Input
+                        {...field}
+                        type="password"
+                        placeholder="Password"
+                        disabled={isLoading}
+                        className={cn(
+                            "h-12 rounded-lg bg-white/10 border-white/30 text-white placeholder:text-white/70",
+                            "focus-visible:border-primary focus-visible:ring-primary",
+                            errors.password && "border-destructive focus-visible:border-destructive focus-visible:ring-destructive"
+                        )}
+                    />
+                )}
+            />
+            {errors.password && (
+                <p className="text-sm text-destructive">{errors.password.message}</p>
             )}
-        />
+        </div>
     );
 }
