@@ -13,11 +13,28 @@ import { Bar, BarChart, Line, LineChart, XAxis, YAxis, CartesianGrid, Responsive
 import { format, parseISO, isSameDay, startOfWeek, addDays, formatISO } from 'date-fns';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { type GenerateWorkoutPlanInput, type GenerateWorkoutPlanOutput } from '@/ai/flows/generateWorkoutPlanFlow';
+// AI functionality temporarily disabled - define types locally
+type GenerateWorkoutPlanInput = {
+  focusedEquipmentId: string;
+  allAvailableEquipment: Array<{
+    id: string;
+    name: string;
+    type: string;
+    imageUrl: string;
+    imageHint: string;
+  }>;
+};
 
-// Remove the actual import if we are faking the call, or keep it if types are still needed and backend might be used later.
-// For now, keeping it for type safety.
-// import { generateWorkoutPlan } from '@/ai/flows/generateWorkoutPlanFlow';
+type GenerateWorkoutPlanOutput = {
+  dailyPlan: Array<{
+    equipmentId: string;
+    name: string;
+    imageUrl: string;
+    imageHint: string;
+    exercises: string[];
+    focus: string;
+  }>;
+};
 
 
 interface Equipment {
