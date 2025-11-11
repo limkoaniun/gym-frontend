@@ -5,7 +5,7 @@ import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
 import { EquipmentForm } from '@/components/dashboard/EquipmentForm';
 import { ImagePreview } from '@/components/dashboard/ImagePreview';
 import { useToast } from '@/hooks/use-toast'; // this hasn't been changed to toastify yet
-import { identifyEquipment } from '@/ai/flows/identifyEquipmentFlow';
+// import { identifyEquipment } from '@/ai/flows/identifyEquipmentFlow'; // Temporarily disabled - AI dependencies removed
 import Cookies from "js-cookie";
 
 
@@ -43,38 +43,18 @@ export default function Page() {
                 setImagePreview(dataUri);
 
                 if (dataUri) {
+                    // AI identification temporarily disabled
                     setIsIdentifying(true);
-                    try {
-                        const result = await identifyEquipment({ photoDataUri: dataUri });
-                        if (
-                            result &&
-                            result.equipmentName &&
-                            result.equipmentName.trim() !== '' &&
-                            result.equipmentName.toLowerCase() !== 'unknown equipment'
-                        ) {
-                            setEquipmentName(result.equipmentName);
-                            toast({
-                                title: 'Equipment Identified',
-                                description: `AI suggests: "${result.equipmentName}". You can edit this name.`,
-                            });
-                        } else {
-                            setEquipmentName('');
-                            toast({
-                                title: 'AI Identification',
-                                description: 'AI could not identify the equipment. Please name it manually.',
-                            });
-                        }
-                    } catch (error) {
-                        console.error('Error identifying equipment:', error);
+
+                    // Simulate AI processing delay
+                    setTimeout(() => {
                         setEquipmentName('');
                         toast({
-                            variant: 'destructive',
-                            title: 'AI Error',
-                            description: 'Failed to identify equipment. Please enter it manually.',
+                            title: 'AI Temporarily Disabled',
+                            description: 'Please name the equipment manually for now.',
                         });
-                    } finally {
                         setIsIdentifying(false);
-                    }
+                    }, 1000);
                 }
             };
 
