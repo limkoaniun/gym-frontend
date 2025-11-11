@@ -8,14 +8,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy over SSH
+      - name: Run remote deploy script
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}   # usually "ubuntu"
+          username: ${{ secrets.EC2_USER }}   # usually 'ubuntu'
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script_stop: true
+          command_timeout: 30m
           script: |
-            set -e
-            sudo chmod +x /home/ubuntu/gym-webapp/deploy.sh
-            sudo bash /home/ubuntu/gym-webapp/deploy.sh
+            sudo bash -lc '/home/ubuntu/gym-webapp/deploy.sh'
