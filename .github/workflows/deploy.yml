@@ -1,0 +1,90 @@
+name: Deploy Gym Web App to EC2
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+  INSTANCE_ID: i-0665e622820de02af
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test --if-present
+
+      - name: Build
+        run: npm run build
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::760971381013:role/Github_ssm_access
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Check SSM agent status
+        run: |
+          aws ssm describe-instance-information \
+            --region ${{ env.AWS_REGION }} \
+            --instance-information-filter-list key=InstanceIds,valueSet=${{ env.INSTANCE_ID }} \
+            --output json
+
+      - name: Deploy via SSM
+        run: |
+          # Send deployment command
+          COMMAND_ID=$(aws ssm send-command \
+            --region ${{ env.AWS_REGION }} \
+            --instance-ids "${{ env.INSTANCE_ID }}" \
+            --document-name "AWS-RunShellScript" \
+            --comment "Deploy from GitHub Actions" \
+            --parameters '{"commands":["sudo -u ubuntu bash /home/ubuntu/gym-webapp/deploy.sh"]}' \
+            --output json \
+            --query 'Command.CommandId' \
+            --output text)
+
+          echo "Deployment started with Command ID: $COMMAND_ID"
+
+          # Wait for command to complete (timeout after 5 minutes)
+          aws ssm wait command-executed \
+            --region ${{ env.AWS_REGION }} \
+            --command-id "$COMMAND_ID" \
+            --instance-id "${{ env.INSTANCE_ID }}" || true
+
+          # Get command result
+          aws ssm get-command-invocation \
+            --region ${{ env.AWS_REGION }} \
+            --command-id "$COMMAND_ID" \
+            --instance-id "${{ env.INSTANCE_ID }}" \
+            --output json
+
+      - name: Health check
+        run: |
+          sleep 10
+          curl -f http://54.227.91.145 || exit 1
+          echo "Application is running!"
