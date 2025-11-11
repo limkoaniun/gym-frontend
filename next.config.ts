@@ -1,7 +1,7 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  output: 'standalone', // For optimized production builds
+  // output: 'standalone', // Temporarily disabled - causing module resolution issues on EC2
   images: {
     remotePatterns: [
       {
