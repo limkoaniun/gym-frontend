@@ -10,44 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Next.js application
-        run: npm run build
-
-      - name: Upload files to EC2
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "."
-          target: "/home/${{ secrets.EC2_USER }}/${{ secrets.FOLDER_NAME }}"
-          rm: true
-          strip_components: 1
-
-      - name: Run deployment commands on EC2
+      - name: Deploy to EC2 using existing deploy script
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/${{ secrets.EC2_USER }}/${{ secrets.FOLDER_NAME }}
-            npm install --production
-
-            # Ensure PM2 is installed
-            sudo npm install -g pm2
-
-            # Restart or start PM2 process
-            pm2 restart ${{ secrets.PM2_NAME }} || pm2 start npm --name ${{ secrets.PM2_NAME }} -- start
+            # Run the existing deployment script
+            bash /home/ubuntu/gym-webapp/deploy.sh
