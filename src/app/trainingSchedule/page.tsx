@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Calendar } from '@/components/ui/calendar';
@@ -168,7 +168,7 @@ const chartConfigStrength = {
 };
 
 
-export default function TrainingSchedulePage() {
+function TrainingSchedulePageContent() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [schedule, setSchedule] = useState<ScheduleEntry[]>(initialSchedule);
   const [activeEquipment, setActiveEquipment] = useState<Equipment | null>(null);
@@ -584,6 +584,34 @@ export default function TrainingSchedulePage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function TrainingSchedulePage() {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col min-h-screen bg-background text-foreground">
+        <header className="p-4 border-b border-border flex justify-between items-center sticky top-0 bg-background/80 backdrop-blur-md z-10">
+          <div className="flex items-center gap-4">
+            <Link href="/dashboard">
+              <Button variant="outline" size="icon" className="h-9 w-9">
+                <ArrowLeft className="h-5 w-5" />
+                <span className="sr-only">Back to Dashboard</span>
+              </Button>
+            </Link>
+            <h1 className="text-xl font-semibold">My Training Schedule & Progress</h1>
+          </div>
+        </header>
+        <main className="flex-1 p-4 md:p-6 flex items-center justify-center">
+          <div className="flex items-center gap-2 text-primary">
+            <Loader2 className="h-6 w-6 animate-spin" />
+            <span>Loading...</span>
+          </div>
+        </main>
+      </div>
+    }>
+      <TrainingSchedulePageContent />
+    </Suspense>
   );
 }
 
