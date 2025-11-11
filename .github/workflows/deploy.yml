@@ -2,20 +2,20 @@ name: Deploy Gym Web App to EC2
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy to EC2 using existing deploy script
+      - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
+          username: ${{ secrets.EC2_USER }}   # usually "ubuntu"
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script_stop: true
           script: |
+            set -e
+            sudo chmod +x /home/ubuntu/gym-webapp/deploy.sh
             sudo bash /home/ubuntu/gym-webapp/deploy.sh
