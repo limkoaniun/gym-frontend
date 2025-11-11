@@ -4,8 +4,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../components/ui/card';
 import { ArrowLeft, PlayCircle, Trash2, CalendarPlus, CalendarX2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import {
@@ -18,8 +18,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { useToast } from '@/hooks/use-toast';
+} from "../../components/ui/alert-dialog";
+import { useToast } from '../../hooks/use-toast';
 
 interface Equipment {
   id: string;
