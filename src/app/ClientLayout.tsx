@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { LoginUserContext, User } from '../components/auth/LoginUserContext';
+import { LoginUserContext, User } from '@/components/auth/LoginUserContext';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
