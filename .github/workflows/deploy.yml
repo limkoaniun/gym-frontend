@@ -14,8 +14,8 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
+          username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script_stop: true
           script: |
-            # Run the existing deployment script
-            bash /home/ubuntu/gym-webapp/deploy.sh
+            sudo bash /home/ubuntu/gym-webapp/deploy.sh
