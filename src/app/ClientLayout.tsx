@@ -1,25 +1,49 @@
-// app/ClientLayout.tsx
 'use client';
 
-import { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import { LoginUserContext, User } from '@/components/auth/LoginUserContext';
+import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from '@/components/login/LanguageSwitcher';
+import { BottomNavbar } from '@/components/navigation/BottomNavbar';
+import { usePathname } from 'next/navigation';
 
-export default function ClientLayout({ children }: { children: React.ReactNode }) {
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
+export default function ClientLayout({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
+  const pathname = usePathname();
 
-    return (
-        <LoginUserContext.Provider value={{ currentUser, setCurrentUser }}>
-            {children}
-            <ToastContainer
-                position="top-center"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={true}
-                closeOnClick
-                pauseOnHover
-                draggable
-            />
-        </LoginUserContext.Provider>
-    );
+  const hideNavbarOn = ['/', '/login'];
+  const showNavbar = !hideNavbarOn.includes(pathname);
+
+  return (
+    <div className="flex-1 flex flex-col">
+      {/* centered column for all public pages */}
+      <main
+        className="
+        relative z-10
+        flex flex-col flex-grow flex-shrink
+        justify-between
+        px-4 py-6
+        w-full
+        max-w-xs    /* mobile */
+        sm:max-w-sm /* small tablets */
+        md:max-w-md
+        lg:max-w-lg
+        xl:max-w-2xl
+        2xl:max-w-3xl
+        mx-auto
+        "
+      >
+        {/* global header */}
+        <header className="flex items-center justify-between">
+          <p className="text-white/60 text-sm font-semibold tracking-wider uppercase">
+            {t('brandName')}
+          </p>
+          <LanguageSwitcher />
+        </header>
+
+        {/* page specific content */}
+        <div>{children}</div>
+        {showNavbar && <BottomNavbar />}
+      </main>
+    </div>
+  );
 }

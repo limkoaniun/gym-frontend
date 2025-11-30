@@ -15,7 +15,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({ imageUrl, onClear, d
         <Image src={imageUrl} alt="Selected preview" fill className="object-contain rounded-md p-1" />
         <Button
             type="button"
-            variant="destructive"
+            variant="link"
             size="icon"
             className="absolute -top-3 -right-3 h-7 w-7 rounded-full z-10 shadow-md"
             onClick={onClear}

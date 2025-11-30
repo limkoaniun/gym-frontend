@@ -141,7 +141,7 @@ export default function MyEquipmentPage() {
                   >
                     <AlertDialogTrigger asChild>
                       <Button
-                        variant="destructive"
+                        variant="link"
                         size="icon"
                         className="absolute top-2 right-2 z-20 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
                         onClick={(e) => openDeleteDialog(e, item)}

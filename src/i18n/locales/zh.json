@@ -1,0 +1,29 @@
+{
+  "brandName": "健身训练",
+  "landing": {
+    "title": "更聪明地训练。",
+    "subtitle": "更好地生活。",
+    "start": "开始",
+    "login": "登录"
+  },
+  "equipment": {
+    "title": "器材",
+    "search": "搜索器材"
+  },
+  "exercises": {
+    "title": "练习",
+    "save": "保存练习",
+    "saved": "已保存",
+    "done": "完成"
+  },
+  "auth": {
+    "email": "邮箱",
+    "password": "密码",
+    "loginButton": "登录",
+    "forgotPassword": "忘记密码？",
+    "or": "或",
+    "signInApple": "使用 Apple 登录",
+    "signInGoogle": "使用 Google 登录",
+    "needCloud": "需要 Cloud 连接才能进行身份验证"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "brandName": "Gym Exercises",
+  "landing": {
+    "title": "Train Smarter.",
+    "subtitle": "Live Better.",
+    "start": "Start",
+    "login": "Log In"
+  },
+  "equipment": {
+    "title": "Equipment",
+    "search": "Search equipment"
+  },
+  "exercises": {
+    "title": "Exercises",
+    "save": "Save exercise",
+    "saved": "Saved",
+    "done": "Done"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Log In",
+    "forgotPassword": "Forgot Password?",
+    "or": "OR",
+    "signInApple": "Sign in with Apple",
+    "signInGoogle": "Log In with Google",
+    "needCloud": "Cloud connection needed for authentication"
+  }
+}
