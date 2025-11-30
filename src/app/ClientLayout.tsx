@@ -11,7 +11,8 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
   const currentPathname = usePathname();
 
   const hideNavbarOn = ['/', '/login'];
-  const showNavbar = !hideNavbarOn.includes(currentPathname);
+  const isNavbarHidden = hideNavbarOn.includes(currentPathname);
+  const showNavbar = !isNavbarHidden;
 
   return (
     <div className="flex-1 flex flex-col">
