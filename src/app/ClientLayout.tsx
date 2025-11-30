@@ -8,10 +8,10 @@ import { usePathname } from 'next/navigation';
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
-  const pathname = usePathname();
+  const currentPathname = usePathname();
 
   const hideNavbarOn = ['/', '/login'];
-  const showNavbar = !hideNavbarOn.includes(pathname);
+  const showNavbar = !hideNavbarOn.includes(currentPathname);
 
   return (
     <div className="flex-1 flex flex-col">
