@@ -9,10 +9,7 @@ import { usePathname } from 'next/navigation';
 export default function ClientLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const currentPathname = usePathname();
-
-  const hideNavbarOn = ['/', '/login'];
-  const isNavbarHidden = hideNavbarOn.includes(currentPathname);
-  const showNavbar = !isNavbarHidden;
+  const navbarHiddenPaths = ['/', '/login'];
 
   return (
     <div className="flex-1 flex flex-col">
@@ -43,7 +40,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
 
         {/* page specific content */}
         <div>{children}</div>
-        {showNavbar && <BottomNavbar />}
+        {!navbarHiddenPaths.includes(currentPathname) && <BottomNavbar />}
       </main>
     </div>
   );
