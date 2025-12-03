@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark --font-body">
-      <body className="relative min-h-screen flex flex-col overflow-hidden antialiased">
+      <body>
         {/* global background image */}
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-60 z-10"
+          className="absolute inset-0 bg-cover bg-center opacity-60"
           style={{ backgroundImage: `url(${landingPageImg.src})` }}
         />
 

@@ -9,8 +9,8 @@ export default function Page() {
   const { t } = useTranslation();
 
   return (
-    <div className="space-y-8 pb-12">
-      <h1 className="text-5xl font-bold text-white leading-tight italic">
+    <div className="absolute bottom-0 w-full">
+      <h1 className="text-5xl font-bold text-white leading-tight italic mb-10">
         {t('landing.title')}
         <br />
         {t('landing.subtitle')}
