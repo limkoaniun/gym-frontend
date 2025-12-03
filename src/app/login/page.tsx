@@ -18,7 +18,7 @@ export default function Page() {
 
       <div className="space-y-4">
         <Link
-          href="/equipment"
+          href="/equipments"
           className={cn(
             buttonVariants({ variant: 'cta', size: 'lg' }),
             'w-full uppercase tracking-wider font-bold text-lg'
