@@ -4,7 +4,14 @@
     "title": "Train Smarter.",
     "subtitle": "Live Better.",
     "start": "Start",
-    "login": "Log In"
+    "login": "Log In",
+    "signUp": "Sign Up",
+    "welcome": "Welcome Back",
+    "noAcc": "Don't have an account?",
+    "createAcc": "Create your Account",
+    "haveAcc": "Already have an account?",
+    "termOfUse": "Term Of Use",
+    "privacyPolicy": "Privacy Policy"
   },
   "equipment": {
     "title": "Equipment",
@@ -22,8 +29,13 @@
     "loginButton": "Log In",
     "forgotPassword": "Forgot Password?",
     "or": "OR",
-    "signInApple": "Sign in with Apple",
-    "signInGoogle": "Log In with Google",
-    "needCloud": "Cloud connection needed for authentication"
+    "signInApple": "Login with Apple",
+    "signInGoogle": "Login with Google",
+    "signInWechat": "Login with Wechat",
+    "needCloud": "Cloud connection needed for authentication",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "userName": "Username"
+
   }
 }

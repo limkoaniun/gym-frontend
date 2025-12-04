@@ -2,6 +2,7 @@ import { Controller, Control, FieldErrors } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { type LoginFormData } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
+import { useTranslation } from 'react-i18next';
 
 interface PasswordStepProps {
     control: Control<LoginFormData>;
@@ -10,7 +11,9 @@ interface PasswordStepProps {
 }
 
 export function PasswordStep({ control, errors, isLoading }: PasswordStepProps) {
-    return (
+  const { t } = useTranslation();
+
+  return (
         <div className="space-y-2">
             <Controller
                 name="password"
@@ -19,7 +22,7 @@ export function PasswordStep({ control, errors, isLoading }: PasswordStepProps) 
                     <Input
                         {...field}
                         type="password"
-                        placeholder="Password"
+                        placeholder={t('auth.password')}
                         disabled={isLoading}
                         className={cn(
                             "h-12 rounded-lg bg-white/10 border-white/30 text-white placeholder:text-white/70",

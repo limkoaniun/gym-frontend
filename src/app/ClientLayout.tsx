@@ -10,7 +10,7 @@ import { LoginUserContext, User } from '@/components/auth/LoginUserContext';
 export default function ClientLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const currentPathname = usePathname();
-  const navbarHiddenPaths = ['/', '/login'];
+  const navbarHiddenPaths = ['/', '/login', '/signup'];
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   return (

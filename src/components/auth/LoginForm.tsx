@@ -17,113 +17,87 @@ import {LoginFooter} from "./LoginFooter";
 import SocialMediaButtons from "@/components/ui/socialMedia";
 import {LoginButton} from "@/components/auth/LoginButton";
 import {LoginUserContext} from "@/components/auth/LoginUserContext";
+import {useTranslation} from "react-i18next";
 
 
 export function LoginForm() {
-    const router = useRouter();
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [step, setStep] = React.useState<'email' | 'password'>('email');
-    const [error, setError] = React.useState<string | null>(null);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [step, setStep] = React.useState<'email' | 'password'>('email');
+  const [error, setError] = React.useState<string | null>(null);
+  const { t } = useTranslation();
 
-    const form = useForm<LoginFormData>({
-        resolver: zodResolver(LoginSchema),
-        defaultValues: {
-            email: "",
-            password: "",
-        },
-    });
+  const form = useForm<LoginFormData>({
+    resolver: zodResolver(LoginSchema), defaultValues: {
+      email: "", password: "",
+    },
+  });
 
-    const loginUserContext = useContext(LoginUserContext);
+  const loginUserContext = useContext(LoginUserContext);
 
-    if (!loginUserContext) {
-        throw new Error("LoginForm must be used within a LoginUserContext.Provider");
+  if (!loginUserContext) {
+    throw new Error("LoginForm must be used within a LoginUserContext.Provider");
+  }
+
+  const {setCurrentUser} = loginUserContext;
+
+
+  const onSubmitActualLogin = async (data: LoginFormData) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const currentUser = await login(data);
+
+      if (currentUser) {
+        const user = {
+          id: currentUser.userId, name: currentUser.username, email: currentUser.email,
+        };
+
+        setCurrentUser(user);
+        router.push('/dashboard');
+      }
+    } catch (err) {
+      setError('Login failed. Please check your credentials and try again.');
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    const {setCurrentUser} = loginUserContext;
+  return (<LoginCard>
+      <LoginHeader/>
 
-    const handleContinueClick = async () => {
-        setIsLoading(true);
-        setError(null);
-        const emailIsValid = await form.trigger("email");
-        setIsLoading(false);
-        if (emailIsValid) {
-            setStep('password');
-        }
-    };
+      {error && (<Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>)}
 
-    const onSubmitActualLogin = async (data: LoginFormData) => {
-        setIsLoading(true);
-        setError(null);
+      <form
+        onSubmit={form.handleSubmit(onSubmitActualLogin)}
+        className="flex flex-col gap-4"
+      >
+        <EmailStep
+          control={form.control}
+          errors={form.formState.errors}
+          isLoading={isLoading}
+          step={step}
+        />
 
-        try {
-            const currentUser = await login(data);
+        <PasswordStep
+          control={form.control}
+          errors={form.formState.errors}
+          isLoading={isLoading}
+        />
 
-            if (currentUser) {
-                const user = {
-                    id: currentUser.userId,
-                    name: currentUser.username,
-                    email: currentUser.email,
-                };
 
-                setCurrentUser(user);
-                router.push('/dashboard');
-            }
-        } catch (err) {
-            setError('Login failed. Please check your credentials and try again.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        <LoginButton
+          type="submit"
+          isLoading={isLoading}
+          loadingText="Logging in..."
+          text= {t('landing.login')}
+        />
+      </form>
 
-    return (
-        <LoginCard>
-            <LoginHeader/>
-
-            {error && (
-                <Alert variant="destructive" className="mb-4">
-                    <AlertDescription>{error}</AlertDescription>
-                </Alert>
-            )}
-
-            <form
-                onSubmit={form.handleSubmit(onSubmitActualLogin)}
-                className="flex flex-col gap-4"
-            >
-                <EmailStep
-                    control={form.control}
-                    errors={form.formState.errors}
-                    isLoading={isLoading}
-                    step={step}
-                />
-
-                {step === 'password' && (
-                    <PasswordStep
-                        control={form.control}
-                        errors={form.formState.errors}
-                        isLoading={isLoading}
-                    />
-                )}
-
-                {step === 'email' ? (
-                    <LoginButton
-                        type="button"
-                        onClick={handleContinueClick}
-                        isLoading={isLoading}
-                        loadingText="Continuing..."
-                        text="Continue"
-                    />
-                ) : (
-                    <LoginButton
-                        type="submit"
-                        isLoading={isLoading}
-                        loadingText="Logging in..."
-                        text="Login"
-                    />
-                )}
-            </form>
-
-            <LoginFooter/>
-            <SocialMediaButtons/>
-        </LoginCard>
-    );
+      <LoginFooter/>
+      <SocialMediaButtons/>
+    </LoginCard>);
 }
