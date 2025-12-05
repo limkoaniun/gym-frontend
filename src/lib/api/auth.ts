@@ -33,7 +33,7 @@ export const login = async (data: LoginPayload): Promise<LoginResponse | null> =
 
 export const signup = async (data: SignupPayload): Promise<SignupPayload | null> => {
     try {
-        const res = await api.post('/players', data);
+        const res = await api.post('/users', data);
         return res.data;
     } catch (error: unknown) {
         console.error('Signup error:', error);

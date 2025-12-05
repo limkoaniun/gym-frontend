@@ -5,136 +5,151 @@ import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from '@/components/ui/card';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
-import {Separator} from '@/components/ui/separator';
 import React, {useState} from "react";
 import {signup} from "@/lib/api/auth";
 import {SignupPayload} from "@/lib/interfaces";
-import SocialMediaButtons from "@/components/ui/socialMedia";
 import {useRouter} from "next/navigation";
 import {toast} from "react-toastify";
-
+import {useTranslation} from 'react-i18next';
 // --- Main Component ---
 export default function SignupPage() {
-    const router = useRouter();
-    const [form, setForm] = useState<SignupPayload>({email: "", username: "", password: ""});
+  const router = useRouter();
+  const [form, setForm] = useState<SignupPayload>({email: "", username: "", password: "", firstName: "", lastName: ""});
+  const [errors, setErrors] = useState<SignupPayload>({email: null, username: null})
+  const {t} = useTranslation();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {id, value} = e.target;
-        setForm((prev) => ({...prev, [id]: value}));
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {id, value} = e.target;
+    if (id === 'email' || id === 'username') {
 
-    const handleSubmit = async () => {
-        console.log("Submitted data:", form);
-        const response = await signup(form);
-        if (response) {
-            toast.success("Signup successful! Please log in.", {
-                position: "top-center",
-                toastId: "signup-success",
-            });
-            // Redirect to login page or show success message
-            router.push('/login');
-        }
-        console.log("Signup response:", response);
-    };
+      setErrors(prev => ({...prev, email: 'Email has already been registered.'}))
+      setErrors(prev => ({...prev, username: 'Username has already been taken.'}))
+      // send request to check existing
+      // if exist
+      //      show error msg
+      //      return
+    }
+    setForm((prev) => ({
+        ...prev, [id]: value
+      }));
+    console.log(form);
+  };
 
-    return (
-        <div className="flex flex-col min-h-screen">
-            {/* Header */}
-            <header className="p-4 sm:p-6 md:p-8 flex justify-between items-center">
-                <h1 className="text-lg font-semibold text-foreground">GymBuddy</h1>
-            </header>
+  const handleSubmit = async () => {
+    console.log("Submitted data:", form);
+    const response = await signup(form);
+    if (response) {
+      toast.success("Signup successful! Please log in.", {
+        position: "top-center", toastId: "signup-success",
+      });
+      // Redirect to login page or show success message
+      router.push('/login');
+    }
+    console.log("Signup response:", response);
+  };
 
-            {/* Main Content */}
-            <main className="flex flex-1 items-center justify-center p-4 sm:p-6 md:p-8 -mt-16">
-                <Card className="w-full max-w-sm shadow-none border-none bg-transparent">
+  return (<div className="m-auto w-[400px] pt-8">
+      {/* Main Content */}
+      <Card className="w-full max-w-sm shadow-none border-none bg-transparent">
 
-                    {/* Title */}
-                    <CardHeader className="text-center p-0 mb-6">
-                        <CardTitle className="text-2xl font-semibold mb-6">Create your account</CardTitle>
-                    </CardHeader>
+        {/* Title */}
+        <CardHeader className="text-center p-0 mb-6">
+          <CardTitle className="text-2xl font-semibold"> {t('landing.createAcc')}</CardTitle>
+        </CardHeader>
 
-                    {/* Form Fields */}
-                    <CardContent className="p-0 space-y-4">
-                        {/* Email */}
-                        <div>
-                            <Label htmlFor="email">Email address</Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="Email address"
-                                value={form.email}
-                                onChange={handleChange}
-                                className="text-base h-12 mt-1 rounded-lg border-input focus:border-primary focus:ring-primary"
-                            />
-                        </div>
+        {/* Form Fields */}
+        <CardContent className="p-0 space-y-4">
+          {/* Email */}
+          <div>
+            <Label htmlFor="email"> {t('auth.email')}</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder={t('auth.email')}
+              value={form.email}
+              onChange={handleChange}
+              className="text-base h-12 mt-1 rounded-lg border-input focus:border-primary focus:ring-primary"
 
-                        {/* Username */}
-                        <div>
-                            <Label htmlFor="email">Username</Label>
-                            <Input
-                                id="username"
-                                type="username"
-                                placeholder="Username"
-                                value={form.username}
-                                onChange={handleChange}
-                                className="text-base h-12 mt-1 rounded-lg border-input focus:border-primary focus:ring-primary"
-                            />
-                        </div>
+            />
+            {errors.email && <div className="text-red-600">{errors.email}</div>}
+          </div>
 
-                        {/* Password */}
-                        <div>
-                            <Label htmlFor="password">Password</Label>
-                            <Input
-                                id="password"
-                                type="password"
-                                placeholder="Password"
-                                value={form.password}
-                                onChange={handleChange}
-                                className="text-base h-12 mt-1 rounded-lg border-input focus:border-primary focus:ring-primary"
-                            />
-                        </div>
 
-                        {/* Submit Button */}
-                        <Button
-                            onClick={handleSubmit}
-                            className="w-full h-12 py-3 text-base rounded-lg bg-primary hover:bg-primary/90"
-                        >
-                            Continue
-                        </Button>
+          {/* Username */}
+          <div>
+            <Label htmlFor="email">{t('auth.userName')}</Label>
+            <Input
+              id="username"
+              type="username"
+              placeholder={t('auth.userName')}
+              value={form.username}
+              onChange={handleChange}
+              className="text-base h-12 mt-1 rounded-lg border-input focus:border-primary focus:ring-primary"
+            />
+            {errors.username && <div className="text-red-600">{errors.username}</div>}
+          </div>
 
-                        {/* Redirect Link */}
-                        <div className="text-center my-4">
-                            <p className="text-sm text-muted-foreground">
-                                Already have an account?{" "}
-                                <Link href="/login" className="text-accent hover:underline">
-                                    Log in
-                                </Link>
-                            </p>
-                        </div>
+          {/* Password */}
+          <div>
+            <Label htmlFor="password">{t('auth.password')}</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder={t('auth.password')}
+              value={form.password}
+              onChange={handleChange}
+              className="text-base h-12 mt-1 rounded-lg border-input focus:border-primary focus:ring-primary"
+            />
+          </div>
+          <div>
+            <Label htmlFor={"firstName"}>{t('auth.firstName')}</Label>
+            <Input
+              id="firstName"
+              type="firstName"
+              placeholder={t('auth.firstName')}
+              value={form.firstName}
+              onChange={handleChange}
+              className="text-base h-12 mt-1 rounded-lg border-input focus:border-primary focus:ring-primary"
+            />
+          </div>
+          <div>
+            <Label htmlFor={"lastName"}>{t('auth.lastName')}</Label>
+            <Input
+              id="lastName"
+              type="lastName"
+              placeholder={t('auth.lastName')}
+              value={form.lastName}
+              onChange={handleChange}
+              className="text-base h-12 mt-1 rounded-lg border-input focus:border-primary focus:ring-primary"/>
+          </div>
+          {/* Submit Button */}
+          <Button
+            onClick={handleSubmit}
+            className="w-full h-12 py-3 text-base rounded-lg bg-primary hover:bg-primary/90"
+          >
+            {t('landing.signUp')}
+          </Button>
 
-                        {/* Divider */}
-                        <div className="relative my-6">
-                            <Separator className="absolute top-1/2 left-0 w-full -translate-y-1/2"/>
-                            <span
-                                className="relative z-10 flex justify-center text-sm text-muted-foreground bg-background px-2">
-                             OR
-                            </span>
-                        </div>
+          {/* Redirect Link */}
+          <div className="text-center my-4">
+            <p className="text-sm text-muted-foreground">
+              {t('landing.haveAcc')}{" "}
+              <Link href="/login" className="text-accent hover:underline">
+                Log in
+              </Link>
+            </p>
+          </div>
+        </CardContent>
 
-                        <SocialMediaButtons/>
-                    </CardContent>
-
-                    {/* Footer */}
-                    <CardFooter className="flex flex-col items-center justify-center mt-8 p-0">
-                        <div className="text-xs text-muted-foreground space-x-2">
-                            <Link href="#" className="hover:underline">Terms of Use</Link>
-                            <span>|</span>
-                            <Link href="#" className="hover:underline">Privacy Policy</Link>
-                        </div>
-                    </CardFooter>
-                </Card>
-            </main>
-        </div>
-    );
+        {/* Footer */}
+        <CardFooter className="flex flex-col items-center justify-center mt-8 p-0">
+          <div className="text-xs text-muted-foreground space-x-2">
+            <Link href="#" className="hover:underline"> {t('landing.termOfUse')}</Link>
+            <span>|</span>
+            <Link href="#" className="hover:underline"> {t('landing.privacyPolicy')}</Link>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>);
 }
     

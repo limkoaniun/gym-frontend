@@ -1,16 +1,19 @@
 import Link from 'next/link';
+import {useTranslation} from "react-i18next";
 
 export function LoginFooter() {
-    return (
+  const { t } = useTranslation();
+
+  return (
         <>
             <div className="text-center mt-4">
                 <p className="text-sm text-white/80">
-                    Don't have an account?{' '}
+                  {t('landing.noAcc')}{' '}
                     <Link
                         href="/signup"
                         className="text-primary font-medium hover:underline"
                     >
-                        Sign up
+                      {t('landing.signUp')}
                     </Link>
                 </p>
             </div>
@@ -20,7 +23,7 @@ export function LoginFooter() {
                     <div className="w-full border-t border-white/20" />
                 </div>
                 <div className="relative flex justify-center text-xs">
-                    <span className="bg-transparent px-2 text-white/60">OR</span>
+                    <span className="bg-transparent px-2 text-white/60">{t('auth.or')}</span>
                 </div>
             </div>
         </>

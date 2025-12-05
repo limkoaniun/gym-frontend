@@ -4,7 +4,15 @@
     "title": "更聪明地训练。",
     "subtitle": "更好地生活。",
     "start": "开始",
-    "login": "登录"
+    "login": "登录",
+    "signUp": "注册",
+    "welcome": "欢迎回来",
+    "noAcc": "没有账号？",
+    "createAcc": "创建你的账户",
+    "haveAcc": "已经拥有账户?",
+    "termOfUse": "使用条款",
+    "privacyPolicy": "隐私权政策"
+
   },
   "equipment": {
     "title": "器材",
@@ -22,8 +30,12 @@
     "loginButton": "登录",
     "forgotPassword": "忘记密码？",
     "or": "或",
-    "signInApple": "使用 Apple 登录",
-    "signInGoogle": "使用 Google 登录",
-    "needCloud": "需要 Cloud 连接才能进行身份验证"
+    "signInApple": "使用Apple登录",
+    "signInGoogle": "使用Google登录",
+    "signInWechat": "使用微信登录",
+    "needCloud": "需要 Cloud 连接才能进行身份验证",
+    "firstName": "名",
+    "lastName": "姓",
+    "userName": "用户名"
   }
 }

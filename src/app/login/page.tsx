@@ -4,13 +4,8 @@ import { LoginForm } from '@/components/auth/LoginForm';
 
 export default function Page() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="p-4 sm:p-6 md:p-8 flex justify-between items-center">
-        <h1 className="text-lg font-semibold text-foreground">GymBuddy</h1>
-      </header>
-      <main className="flex flex-1 items-center justify-center p-4 sm:p-6 md:p-8 -mt-16">
+    <div className="m-auto w-[400px] pt-8">
         <LoginForm />
-      </main>
     </div>
   );
 }
