@@ -3,6 +3,7 @@ import ClientLayout from './ClientLayout';
 import { Metadata } from 'next';
 import landingPageImg from '@/assets/landingPageImg.jpg';
 import React from 'react';
+import { EquipmentProvider } from '@/context/EquipmentContext';
 
 export const metadata: Metadata = {
   title: 'Gym Exercises',
@@ -18,12 +19,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           className="absolute inset-0 bg-cover bg-center opacity-60"
           style={{ backgroundImage: `url(${landingPageImg.src})` }}
         />
-
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90" />
-
         {/* all pages go here */}
-        <ClientLayout>{children}</ClientLayout>
+        <EquipmentProvider>
+          <ClientLayout>{children}</ClientLayout>
+        </EquipmentProvider>
       </body>
     </html>
   );

@@ -1,93 +1,18 @@
 'use client';
 
+import EquipmentListItem from '@/components/equipments/EquipmentListItem';
+import { useEquipment } from '@/hooks/useEquipment';
+
 export default function Page() {
+  const { equipments, loading, error } = useEquipment();
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
+
   return (
-    <>
-      <h2>equipment page</h2>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-      <p>
-        asdasd asdasd asdasdas asdas,asdasd asdasd asdasdas asdas asdasd asdasd asdasdas asdas,
-        aadasdasdsad asdas das das dasdsa.
-      </p>
-    </>
+    <div className="flex flex-col">
+      {equipments &&
+        equipments.map(equipment => <EquipmentListItem equipment={equipment} key={equipment.id} />)}
+    </div>
   );
 }
