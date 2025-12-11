@@ -4,19 +4,27 @@ import EquipmentListItem from '@/components/equipments/EquipmentListItem';
 import { Equipment } from '@/lib/interfaces';
 import { useEffect, useState } from 'react';
 import { fetchEquipments } from '@/lib/api/equipment';
+import { useAppContext } from '@/context/AppContext';
 
 export default function Page() {
   const [equipments, setEquipments] = useState<Equipment[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { setLoadingMask } = useAppContext();
 
   useEffect(() => {
-    fetchEquipments().then(data => {
-      setEquipments(data);
-      setLoading(false);
-    });
-  }, []);
+    if (setLoadingMask) {
+      setLoadingMask(true);
+    }
 
-  if (loading) return <div>Loading...</div>;
+    fetchEquipments()
+      .then(data => {
+        setEquipments(data as Equipment[]);
+      })
+      .finally(() => {
+        if (setLoadingMask) {
+          setLoadingMask(false);
+        }
+      });
+  }, [setLoadingMask]);
 
   return (
     <div className="flex flex-col">

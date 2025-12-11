@@ -54,3 +54,16 @@ export interface Equipment {
   usages: Usage[];
   medias: Media[];
 }
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface AppContextType {
+  currentUser?: User;
+  setCurrentUser?: (user: User) => void;
+  loadingMask?: boolean;
+  setLoadingMask?: (value: boolean) => void;
+}
