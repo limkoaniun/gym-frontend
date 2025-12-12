@@ -62,8 +62,8 @@ export interface User {
 }
 
 export interface AppContextType {
-  currentUser?: User;
-  setCurrentUser?: (user: User) => void;
-  loadingMask?: boolean;
-  setLoadingMask?: (value: boolean) => void;
+  currentUser: User;
+  setCurrentUser: (user: User) => void;
+  loadingMask: boolean;
+  setLoadingMask: (value: boolean) => void;
 }
