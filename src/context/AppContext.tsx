@@ -1,4 +1,3 @@
-// AppContext.tsx
 'use client';
 
 import { createContext, ReactNode, useContext, useState } from 'react';

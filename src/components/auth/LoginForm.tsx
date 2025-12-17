@@ -1,24 +1,23 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import {useContext} from "react";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useRouter} from 'next/navigation';
-import {Alert, AlertDescription} from "@/components/ui/alert";
+import * as React from 'react';
+import { useContext } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
-import {type LoginFormData, LoginSchema} from "@/lib/schemas";
-import {login} from "@/lib/api/auth";
-import {LoginCard} from "./LoginCard";
-import {LoginHeader} from "./LoginHeader";
-import {EmailStep} from "./EmailStep";
-import {PasswordStep} from "./PasswordStep";
-import {LoginFooter} from "./LoginFooter";
-import SocialMediaButtons from "@/components/ui/socialMedia";
-import {LoginButton} from "@/components/auth/LoginButton";
-import {LoginUserContext} from "@/components/auth/LoginUserContext";
-import {useTranslation} from "react-i18next";
-
+import { type LoginFormData, LoginSchema } from '@/lib/schemas';
+import { login } from '@/lib/api/auth';
+import { LoginCard } from './LoginCard';
+import { LoginHeader } from './LoginHeader';
+import { EmailStep } from './EmailStep';
+import { PasswordStep } from './PasswordStep';
+import { LoginFooter } from './LoginFooter';
+import SocialMediaButtons from '@/components/ui/socialMedia';
+import { LoginButton } from '@/components/auth/LoginButton';
+import { AppContext } from '@/context/AppContext';
+import { useTranslation } from 'react-i18next';
 
 export function LoginForm() {
   const router = useRouter();
@@ -28,19 +27,20 @@ export function LoginForm() {
   const { t } = useTranslation();
 
   const form = useForm<LoginFormData>({
-    resolver: zodResolver(LoginSchema), defaultValues: {
-      email: "", password: "",
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
     },
   });
 
-  const loginUserContext = useContext(LoginUserContext);
+  const appContext = useContext(AppContext);
 
-  if (!loginUserContext) {
-    throw new Error("LoginForm must be used within a LoginUserContext.Provider");
+  if (!appContext) {
+    throw new Error('LoginForm must be used within a AppContext.Provider');
   }
 
-  const {setCurrentUser} = loginUserContext;
-
+  const { setCurrentUser } = appContext;
 
   const onSubmitActualLogin = async (data: LoginFormData) => {
     setIsLoading(true);
@@ -51,7 +51,9 @@ export function LoginForm() {
 
       if (currentUser) {
         const user = {
-          id: currentUser.userId, name: currentUser.username, email: currentUser.email,
+          id: currentUser.userId,
+          name: currentUser.username,
+          email: currentUser.email,
         };
 
         setCurrentUser(user);
@@ -64,17 +66,17 @@ export function LoginForm() {
     }
   };
 
-  return (<LoginCard>
-      <LoginHeader/>
+  return (
+    <LoginCard>
+      <LoginHeader />
 
-      {error && (<Alert variant="destructive" className="mb-4">
+      {error && (
+        <Alert variant="destructive" className="mb-4">
           <AlertDescription>{error}</AlertDescription>
-        </Alert>)}
+        </Alert>
+      )}
 
-      <form
-        onSubmit={form.handleSubmit(onSubmitActualLogin)}
-        className="flex flex-col gap-4"
-      >
+      <form onSubmit={form.handleSubmit(onSubmitActualLogin)} className="flex flex-col gap-4">
         <EmailStep
           control={form.control}
           errors={form.formState.errors}
@@ -82,22 +84,18 @@ export function LoginForm() {
           step={step}
         />
 
-        <PasswordStep
-          control={form.control}
-          errors={form.formState.errors}
-          isLoading={isLoading}
-        />
-
+        <PasswordStep control={form.control} errors={form.formState.errors} isLoading={isLoading} />
 
         <LoginButton
           type="submit"
           isLoading={isLoading}
           loadingText="Logging in..."
-          text= {t('landing.login')}
+          text={t('landing.login')}
         />
       </form>
 
-      <LoginFooter/>
-      <SocialMediaButtons/>
-    </LoginCard>);
+      <LoginFooter />
+      <SocialMediaButtons />
+    </LoginCard>
+  );
 }

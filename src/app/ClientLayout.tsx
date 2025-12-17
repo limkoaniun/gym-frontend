@@ -10,8 +10,8 @@ import { AppProvider, useAppContext } from '@/context/AppContext';
 function ClientLayoutContent({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const currentPathname = usePathname();
-  const { loadingMask } = useAppContext(); // ✅ Now inside provider
-  const navbarHiddenPaths = ['/', '/login', '/signup'];
+  const { loadingMask } = useAppContext();
+  const componentHiddenPaths = ['/', '/login', '/signup'];
 
   return (
     <div className="max-w-[700px] mx-auto px-4 relative h-screen">
@@ -28,7 +28,7 @@ function ClientLayoutContent({ children }: { children: ReactNode }) {
         {children}
       </main>
 
-      {!navbarHiddenPaths.includes(currentPathname) && <BottomNavbar />}
+      {!componentHiddenPaths.includes(currentPathname) && <BottomNavbar />}
 
       {loadingMask && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center text-white text-lg z-50">
