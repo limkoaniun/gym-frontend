@@ -6,6 +6,13 @@ import { LanguageSwitcher } from '@/components/login/LanguageSwitcher';
 import { BottomNavbar } from '@/components/navigation/BottomNavbar';
 import { usePathname } from 'next/navigation';
 import { AppProvider, useAppContext } from '@/context/AppContext';
+import { Spinner } from '@/components/ui/spinner';
+import { Carter_One } from 'next/font/google';
+
+const carterOne = Carter_One({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 function ClientLayoutContent({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
@@ -29,10 +36,10 @@ function ClientLayoutContent({ children }: { children: ReactNode }) {
       </main>
 
       {!componentHiddenPaths.includes(currentPathname) && <BottomNavbar />}
-
       {loadingMask && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center text-white text-lg z-50">
-          Loading...
+        <div className="flex flex-col fixed inset-0 bg-black/40 items-center justify-center text-white text-lg z-50">
+          <Spinner className="size-16" />
+          <div className={carterOne.className}>Loading ...</div>
         </div>
       )}
     </div>
