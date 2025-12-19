@@ -17,20 +17,35 @@ const SearchBar = ({ handleSearch }: SearchBarProps) => {
           value={inputText}
           onChange={e => setInputText(e.target.value)}
           className="
-                flex w-full px-3 py-3 mt-1 ring-offset-background
-                file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground
-                disabled:cursor-not-allowed disabled:opacity-50
-                md:text-sm h-14 pl-14 pr-14 text-base bg-white/10 backdrop-blur-xl
-                border-2 border-white/20 text-white placeholder:text-white/60 rounded-2xl
-                focus:outline-none
-                focus:ring-0
-                focus:ring-offset-0
-                focus:border-transparent
+                w-full px-3 py-3 mt-1 h-14 pl-14 pr-14
+                bg-white/10 backdrop-blur-xl
+                border-2 border-white/20
+                text-white placeholder:text-white/60
+                rounded-[10px_0_0_10px]
+                focus:outline-none focus:ring-0 focus:border-transparent
                 "
         />
-        <Camera className="absolute right-10 text-white" />
-        <button onClick={() => handleSearch(inputText)}>
-          <Search className="ml-2" />
+        <button className="absolute right-[4rem]">
+          <Camera />
+        </button>
+
+        <button
+          onClick={() => handleSearch(inputText)}
+          className="
+                flex items-center justify-center
+                w-[55px] h-[56px] mt-1
+                border-2 border-white/20
+                border-l-0
+                bg-white/10 backdrop-blur-xl
+                text-white
+                rounded-[0_10px_10px_0]
+                transition-all duration-200
+                hover:bg-white/20
+                hover:scale-[1.02]
+                active:scale-[0.98]
+                "
+        >
+          <Search />
         </button>
       </div>
     </div>

@@ -3,35 +3,37 @@
 import EquipmentListItem from '@/components/equipments/EquipmentListItem';
 import { Equipment } from '@/lib/interfaces';
 import { useEffect, useState } from 'react';
-import { fetchEquipments, searchEquipmentsWithAI } from '@/lib/api/equipment';
+import { searchEquipments } from '@/lib/api/equipment';
 import { useAppContext } from '@/context/AppContext';
 import SearchBar from '@/components/dashboard/SearchBar';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const [equipments, setEquipments] = useState<Equipment[]>([]);
   const { setLoadingMask } = useAppContext();
+  const router = useRouter();
 
   useEffect(() => {
-    if (setLoadingMask) {
-      setLoadingMask(true);
-    }
+    fetchEquipmentFromApi();
+  }, []);
 
-    fetchEquipments()
+  const fetchEquipmentFromApi = (query?: string) => {
+    setLoadingMask(true);
+    searchEquipments(query)
       .then(data => {
         setEquipments(data as Equipment[]);
       })
       .finally(() => {
-        if (setLoadingMask) {
-          setLoadingMask(false);
-        }
+        setLoadingMask(false);
       });
-  }, [setLoadingMask]);
+  };
 
   const handleSearch = (inputText: string) => {
-    const res = searchEquipmentsWithAI(inputText);
-    console.log('receiving data from api', res);
+    fetchEquipmentFromApi(inputText);
+  };
 
-    // console.log('sending request to search: ' + inputText);
+  const handleClick = (id: number | string) => {
+    router.push(`/equipments/${id}`);
   };
 
   return (
@@ -42,7 +44,11 @@ export default function Page() {
         <div className="max-w-full max-auto">
           {equipments &&
             equipments.map(equipment => (
-              <EquipmentListItem equipment={equipment} key={equipment.id} />
+              <EquipmentListItem
+                equipment={equipment}
+                key={equipment.id}
+                onClick={() => handleClick(equipment.id)}
+              />
             ))}
         </div>
       </div>

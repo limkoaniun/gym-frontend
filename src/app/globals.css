@@ -114,11 +114,12 @@ All colors MUST be HSL.
 
     :focus-visible {
         --tw-ring-offset-width: 0px;
-        --tw-ring-color: #575C61 !important;
-        --tw-ring-shadow: 0 0 #0000;
+        --tw-ring-color: #fff3 !important;
+        --tw-ring-shadow: 0 0 #fff3 !important;
         --tw-ring-offset-shadow: 0 0 #0000;
+        border-color: #fff3 !important;
         outline: none;
-        box-shadow: none;
+        box-shadow: none ;
     }
 
     body {
