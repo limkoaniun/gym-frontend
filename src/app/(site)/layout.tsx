@@ -1,15 +1,15 @@
-import './globals.css';
-import ClientLayout from './ClientLayout';
+import '../globals.css';
 import { Metadata } from 'next';
-import landingPageImg from '@/assets/landingPageImg.jpg';
 import React from 'react';
+import ClientLayout from './ClientLayout';
+import landingPageImg from '../../assets/landingPageImg.jpg';
 
 export const metadata: Metadata = {
   title: 'Gym Exercises',
   description: 'Plan workouts with AI in seconds',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark --font-body">
       <body>
