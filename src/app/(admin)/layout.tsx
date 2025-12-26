@@ -1,13 +1,13 @@
 import React from 'react';
-import { AdminLayoutClient } from './AdminLayoutClient';
+import AdminLayout from './AdminLayout';
 import '../globals.css';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <html lang="en" className="dark --font-body">
         <body>
-          <AdminLayoutClient>{children}</AdminLayoutClient>
+          <AdminLayout>{children}</AdminLayout>
         </body>
       </html>
     </>

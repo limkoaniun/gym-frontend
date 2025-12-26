@@ -2,7 +2,7 @@ import '../globals.css';
 import { Metadata } from 'next';
 import React from 'react';
 import ClientLayout from './ClientLayout';
-import landingPageImg from '../../assets/landingPageImg.jpg';
+import landingPageImg from '../../../public/assets/landingPageImg.jpg';
 
 export const metadata: Metadata = {
   title: 'Gym Exercises',
