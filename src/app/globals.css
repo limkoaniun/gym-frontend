@@ -7,122 +7,122 @@ All colors MUST be HSL.
 */
 
 @layer base {
-    :root {
-        --background: 215 25% 12%;
-        --foreground: 0 0% 98%;
+  :root {
+    --background: 215 25% 12%;
+    --foreground: 0 0% 98%;
 
-        --card: 0 0% 100%;
-        --card-foreground: 215 25% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
 
-        --popover: 0 0% 100%;
-        --popover-foreground: 215 25% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
 
-        --primary: 215 80% 20%;
-        --primary-foreground: 0 0% 100%;
+    --primary: 215 80% 20%;
+    --primary-foreground: 0 0% 100%;
 
-        --secondary: 215 20% 92%;
-        --secondary-foreground: 215 25% 15%;
+    --secondary: 215 20% 92%;
+    --secondary-foreground: 215 25% 15%;
 
-        --muted: 215 20% 92%;
-        --muted-foreground: 215 15% 45%;
+    --muted: 215 20% 92%;
+    --muted-foreground: 215 15% 45%;
 
-        --accent: 185 70% 50%;
-        --accent-foreground: 0 0% 100%;
+    --accent: 185 70% 50%;
+    --accent-foreground: 0 0% 100%;
 
-        --cta: 12 85% 60%;
-        --cta-foreground: 0 0% 100%;
+    --cta: 12 85% 60%;
+    --cta-foreground: 0 0% 100%;
 
-        --destructive: 0 84% 60%;
-        --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-        --border: 215 20% 88%;
-        --input: 215 20% 88%;
-        --ring: 185 70% 50%;
+    --border: 215 20% 88%;
+    --input: 215 20% 88%;
+    --ring: 185 70% 50%;
 
-        --radius: 1rem;
+    --radius: 1rem;
 
-        --gradient-hero: linear-gradient(135deg, hsl(215 80% 20%), hsl(215 70% 30%));
-        --gradient-accent: linear-gradient(135deg, hsl(185 70% 50%), hsl(185 80% 60%));
-        --shadow-card: 0 4px 6px -1px hsl(215 25% 15% / 0.1);
-        --shadow-elevated: 0 10px 25px -5px hsl(215 25% 15% / 0.15);
+    --gradient-hero: linear-gradient(135deg, hsl(215 80% 20%), hsl(215 70% 30%));
+    --gradient-accent: linear-gradient(135deg, hsl(185 70% 50%), hsl(185 80% 60%));
+    --shadow-card: 0 4px 6px -1px hsl(215 25% 15% / 0.1);
+    --shadow-elevated: 0 10px 25px -5px hsl(215 25% 15% / 0.15);
 
-        --sidebar-background: 0 0% 98%;
+    --sidebar-background: 0 0% 98%;
 
-        --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-foreground: 240 5.3% 26.1%;
 
-        --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary: 240 5.9% 10%;
 
-        --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-primary-foreground: 0 0% 98%;
 
-        --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent: 240 4.8% 95.9%;
 
-        --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
 
-        --sidebar-border: 220 13% 91%;
+    --sidebar-border: 220 13% 91%;
 
-        --sidebar-ring: 217.2 91.2% 59.8%;
-    }
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
 
-    .dark {
-        --card: 215 25% 15%;
-        --card-foreground: 0 0% 98%;
+  .dark {
+    --card: 215 25% 15%;
+    --card-foreground: 0 0% 98%;
 
-        --popover: 215 25% 15%;
-        --popover-foreground: 0 0% 98%;
+    --popover: 215 25% 15%;
+    --popover-foreground: 0 0% 98%;
 
-        --primary: 215 80% 60%;
-        --primary-foreground: 0 0% 100%;
+    --primary: 215 80% 60%;
+    --primary-foreground: 0 0% 100%;
 
-        --secondary: 215 25% 22%;
-        --secondary-foreground: 0 0% 98%;
+    --secondary: 215 25% 22%;
+    --secondary-foreground: 0 0% 98%;
 
-        --muted: 215 25% 22%;
-        --muted-foreground: 215 10% 65%;
+    --muted: 215 25% 22%;
+    --muted-foreground: 215 10% 65%;
 
-        --accent: 185 70% 55%;
-        --accent-foreground: 0 0% 100%;
+    --accent: 185 70% 55%;
+    --accent-foreground: 0 0% 100%;
 
-        --cta: 12 85% 65%;
-        --cta-foreground: 0 0% 100%;
+    --cta: 12 85% 65%;
+    --cta-foreground: 0 0% 100%;
 
-        --destructive: 0 84% 60%;
-        --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-        --border: 215 25% 22%;
-        --input: 215 25% 22%;
-        --ring: 185 70% 55%;
+    --border: 215 25% 22%;
+    --input: 215 25% 22%;
+    --ring: 185 70% 55%;
 
-        --gradient-hero: linear-gradient(135deg, hsl(215 80% 25%), hsl(215 70% 35%));
-        --gradient-accent: linear-gradient(135deg, hsl(185 70% 45%), hsl(185 80% 55%));
-        --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.3);
-        --shadow-elevated: 0 10px 25px -5px hsl(0 0% 0% / 0.4);
-        --sidebar-background: 240 5.9% 10%;
-        --sidebar-foreground: 240 4.8% 95.9%;
-        --sidebar-primary: 224.3 76.3% 48%;
-        --sidebar-primary-foreground: 0 0% 100%;
-        --sidebar-accent: 240 3.7% 15.9%;
-        --sidebar-accent-foreground: 240 4.8% 95.9%;
-        --sidebar-border: 240 3.7% 15.9%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
-    }
+    --gradient-hero: linear-gradient(135deg, hsl(215 80% 25%), hsl(215 70% 35%));
+    --gradient-accent: linear-gradient(135deg, hsl(185 70% 45%), hsl(185 80% 55%));
+    --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.3);
+    --shadow-elevated: 0 10px 25px -5px hsl(0 0% 0% / 0.4);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
 }
 
 @layer base {
-    * {
-        @apply border-border;
-    }
+  * {
+    @apply border-border;
+  }
 
-    :focus-visible {
-        --tw-ring-offset-width: 0px;
-        --tw-ring-color: #fff3 !important;
-        --tw-ring-shadow: 0 0 #fff3 !important;
-        --tw-ring-offset-shadow: 0 0 #0000;
-        border-color: #fff3 !important;
-        outline: none;
-        box-shadow: none ;
-    }
+  :focus-visible {
+    --tw-ring-offset-width: 0px;
+    --tw-ring-color: #fff3 !important;
+    --tw-ring-shadow: 0 0 #fff3 !important;
+    --tw-ring-offset-shadow: 0 0 #0000;
+    border-color: #fff3 !important;
+    outline: none;
+    box-shadow: none;
+  }
 
-    body {
-        @apply bg-background text-foreground;
-    }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

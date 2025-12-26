@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import React, { useState } from 'react';
 import { signup } from '@/lib/api/auth';
-import { SignupPayload } from '@/lib/interfaces';
+import { SignupErrors, SignupPayload } from '@/lib/interfaces';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next'; // --- Main Component ---
@@ -21,7 +21,7 @@ export default function SignupPage() {
     firstName: '',
     lastName: '',
   });
-  const [errors, setErrors] = useState<SignupPayload>({ email: null, username: null });
+  const [errors, setErrors] = useState<SignupErrors>({ email: null, username: null });
   const { t } = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

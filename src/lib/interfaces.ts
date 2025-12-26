@@ -17,6 +17,11 @@ export interface SignupPayload {
   lastName?: string;
 }
 
+export interface SignupErrors {
+  email: string | null;
+  username: string | null;
+}
+
 export interface Muscle {
   id: number;
   name: string;

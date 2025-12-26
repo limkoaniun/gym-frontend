@@ -63,13 +63,13 @@ The application will be available at `http://localhost:9002`
 
 ## 🔧 Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server with Turbopack on port 9002 |
-| `npm run build` | Build the application for production |
-| `npm start` | Start production server |
-| `npm run lint` | Run ESLint for code quality checks |
-| `npm run typecheck` | Run TypeScript type checking |
+| Command             | Description                                          |
+| ------------------- | ---------------------------------------------------- |
+| `npm run dev`       | Start development server with Turbopack on port 9002 |
+| `npm run build`     | Build the application for production                 |
+| `npm start`         | Start production server                              |
+| `npm run lint`      | Run ESLint for code quality checks                   |
+| `npm run typecheck` | Run TypeScript type checking                         |
 
 ## 📁 Project Structure
 
@@ -136,12 +136,14 @@ We use Radix UI primitives with custom styling:
 ### Common Issues
 
 **Port already in use:**
+
 ```bash
 # Kill process on port 9002
 npx kill-port 9002
 ```
 
 **TypeScript errors:**
+
 ```bash
 # Clear Next.js cache
 rm -rf .next
@@ -149,6 +151,7 @@ npm run dev
 ```
 
 **Dependencies issues:**
+
 ```bash
 # Clean install
 rm -rf node_modules package-lock.json
@@ -156,6 +159,7 @@ npm install
 ```
 
 **Backend connection issues:**
+
 - Ensure your backend API is running on `http://localhost:8080`
 - Check the `NEXT_PUBLIC_API_BASE_URL` in `.env.local`
 - Verify network connectivity
@@ -165,6 +169,7 @@ npm install
 ### IDE Setup
 
 For VS Code users, recommended extensions:
+
 - ES7+ React/Redux/React-Native snippets
 - Tailwind CSS IntelliSense
 - TypeScript Importer
