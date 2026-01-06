@@ -1,5 +1,5 @@
 import api from '../axios';
-import { Equipment } from '@/lib/interfaces';
+import { Equipment, Usage } from '@/lib/interfaces';
 
 export async function searchEquipments(query?: string): Promise<Equipment[]> {
   let res;
@@ -9,5 +9,15 @@ export async function searchEquipments(query?: string): Promise<Equipment[]> {
     res = await api.get('/equipments');
   }
 
+  return res.data;
+}
+
+export async function fetchEquipmentById(id: string): Promise<Equipment> {
+  const res = await api.get(`/equipments/${id}`);
+  return res.data;
+}
+
+export async function fetchUsageById(id: string): Promise<Usage> {
+  const res = await api.get(`/usages/${id}`);
   return res.data;
 }
