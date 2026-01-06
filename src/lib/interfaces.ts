@@ -29,8 +29,10 @@ export interface Muscle {
 
 export interface Step {
   id: number;
-  name: string;
-  description?: string;
+  title: string;
+  instruction: string;
+  setUp: boolean;
+  medias: Media[];
 }
 
 export interface Usage {
@@ -39,6 +41,7 @@ export interface Usage {
   description: string;
   muscles: Muscle[];
   steps: Step[];
+  medias: Media[];
 }
 
 export type MediaType = 'IMAGE' | 'VIDEO';

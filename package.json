@@ -39,6 +39,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "dotenv": "^16.5.0",
+    "flowbite-react": "^0.12.14",
     "i18next": "^25.6.3",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.475.0",

@@ -1,0 +1,85 @@
+'use client';
+
+import { useParams } from 'next/navigation';
+import { Equipment, Usage, Step, Muscle, Media } from '@/lib/interfaces';
+import { useEffect, useState } from 'react';
+import { fetchUsageById } from '@/lib/api/equipment';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Carousel } from 'flowbite-react';
+import { index } from 'd3-array';
+import StepSlide from '@/components/equipments/StepSlide';
+
+const API = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+export default function StepPage() {
+  const params = useParams();
+  const id = params.id; // Access the 'slug' dynamic parameter
+  const [usage, setUsage] = useState<Usage>({
+    id: 0,
+    name: '',
+    description: '',
+    muscles: [],
+    steps: [],
+    medias: [],
+  });
+  const [setupSteps, setSetupSteps] = useState<Step[]>([]);
+  const [executeSteps, setExecuteSteps] = useState<Step[]>([]);
+
+  useEffect(() => {
+    fetchUsageById(id as string).then((data: Usage) => {
+      setUsage(data);
+      const newSetups: Step[] = [];
+      const newExecutes: Step[] = [];
+      data.steps.forEach(step => {
+        if (!step.setUp) {
+          newExecutes.push(step);
+        } else {
+          newSetups.push(step);
+        }
+      });
+      setSetupSteps(newSetups);
+      setExecuteSteps(newExecutes);
+    });
+  }, []);
+
+  const [showPreparation, setShowPreparation] = useState(false);
+
+  const handleShowPreparation = () => {
+    setShowPreparation(!showPreparation);
+  };
+
+  return (
+    <div>
+      <h1 className=" py-3 text-2xl font-bold">{usage.name}</h1>
+      <div className="my-4 flex-col">
+        {usage.muscles.map(muscle => (
+          <span
+            key={muscle.name}
+            className="me-4 inline-flex items-center rounded-md bg-white/10 px-3 py-2 text-xs font-medium text-white ring-1 ring-inset ring-white/20"
+          >
+            {muscle.name}
+          </span>
+        ))}
+      </div>
+
+      {showPreparation && (
+        <div>
+          <h2 className="py-3 text-xl font-bold">Preparation</h2>
+          <StepSlide steps={setupSteps} />
+        </div>
+      )}
+      <div className="mt-6 flex justify-between">
+        <div className="py-3 font-bold">Execution</div>
+        <Button variant="outline" size="sm" onClick={handleShowPreparation}>
+          Show Preparation
+        </Button>
+      </div>
+      <StepSlide steps={executeSteps} />
+      <div className="flex py-5 justify-center mt-10">
+        <Button variant="secondary" size="lg" className="w-full bg-white/20">
+          Done
+        </Button>
+      </div>
+    </div>
+  );
+}

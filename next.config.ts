@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 import path from 'path';
+// @ts-ignore
+import withFlowbiteReact from 'flowbite-react/plugin/nextjs';
 
 const nextConfig: NextConfig = {
   // output: 'standalone', // Temporarily disabled - causing module resolution issues on EC2
@@ -22,4 +24,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withFlowbiteReact(nextConfig);
