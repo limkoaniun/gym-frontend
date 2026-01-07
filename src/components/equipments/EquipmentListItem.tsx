@@ -14,7 +14,7 @@ const EquipmentListItem = ({ equipment, onClick }: Props) => {
       <div className="w-full max-w-md sm:max-w-xl lg:max-w-3xl mx-auto my-2">
         <div className="flex w-full items-center bg-inherit rounded shadow-sm overflow-hidden cursor-pointer hover:bg-white/5 transition-colors">
           <img
-            src={`${API}/medias/${equipment.medias[0].id}`}
+            src={`${API}/medias/${equipment.medias[0]?.id}`}
             alt={equipment.name}
             className="h-20 w-20 m-4 flex-none object-cover rounded-2xl"
           />
