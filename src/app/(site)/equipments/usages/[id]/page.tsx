@@ -64,15 +64,22 @@ export default function StepPage() {
 
       {showPreparation && (
         <div>
-          <h2 className="py-3 text-xl font-bold">Preparation</h2>
+          <div className="mt-6 flex justify-between">
+            <h2 className="py-3 text-xl font-bold">Preparation</h2>
+            <Button variant="outline" size="sm" onClick={handleShowPreparation}>
+              Hide Preparation
+            </Button>
+          </div>
           <StepSlide steps={setupSteps} />
         </div>
       )}
       <div className="mt-6 flex justify-between">
-        <div className="py-3 font-bold">Execution</div>
-        <Button variant="outline" size="sm" onClick={handleShowPreparation}>
-          Show Preparation
-        </Button>
+        <div className="py-3 text-xl font-bold">Execution</div>
+        {!showPreparation && (
+          <Button variant="outline" size="sm" onClick={handleShowPreparation}>
+            Show Preparation
+          </Button>
+        )}
       </div>
       <StepSlide steps={executeSteps} />
       <div className="flex py-5 justify-center mt-10">
