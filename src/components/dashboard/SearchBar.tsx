@@ -1,13 +1,15 @@
 import { Input } from '@/components/ui/input';
 import { Camera, Search } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 type SearchBarProps = {
-  handleSearch: (inputText: string) => void;
+  handleTextSearch: (inputText: string) => void;
+  handleImageSearch: (file?: File) => void;
 };
 
-const SearchBar = ({ handleSearch }: SearchBarProps) => {
+const SearchBar = ({ handleTextSearch, handleImageSearch }: SearchBarProps) => {
   const [inputText, setInputText] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
   return (
     <div className="max-w-md mx-auto">
       <div className="relative flex items-center justify-center">
@@ -25,12 +27,28 @@ const SearchBar = ({ handleSearch }: SearchBarProps) => {
                 focus:outline-none focus:ring-0 focus:border-transparent
                 "
         />
-        <button className="absolute right-[4rem]">
+
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className="
+            absolute right-[4rem]
+            rounded-full
+            p-2
+            hover: bg-muted
+          "
+        >
           <Camera />
         </button>
 
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={e => handleImageSearch(e.target.files?.[0])}
+        />
         <button
-          onClick={() => handleSearch(inputText)}
+          onClick={() => handleTextSearch(inputText)}
           className="
                 flex items-center justify-center
                 w-[55px] h-[56px] mt-1

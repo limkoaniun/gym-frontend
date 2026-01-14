@@ -12,6 +12,19 @@ export async function searchEquipments(query?: string): Promise<Equipment[]> {
   return res.data;
 }
 
+export async function searchEquipmentsByImage(file: File): Promise<Equipment[]> {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const res = await api.post('/equipment/search-by-image', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return res.data;
+}
+
 export async function fetchEquipmentById(id: string): Promise<Equipment> {
   const res = await api.get(`/equipments/${id}`);
   return res.data;
