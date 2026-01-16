@@ -16,9 +16,9 @@ import { PasswordStep } from './PasswordStep';
 import { LoginFooter } from './LoginFooter';
 import SocialMediaButtons from '@/components/ui/socialMedia';
 import { LoginButton } from '@/components/auth/LoginButton';
-import { AppContext } from '@/context/AppContext';
+import { AppContext, useAppContext } from '@/context/AppContext';
 import { useTranslation } from 'react-i18next';
-
+import Cookies from "js-cookie";
 export function LoginForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -34,13 +34,7 @@ export function LoginForm() {
     },
   });
 
-  const appContext = useContext(AppContext);
-
-  if (!appContext) {
-    throw new Error('LoginForm must be used within a AppContext.Provider');
-  }
-
-  const { setCurrentUser } = appContext;
+  const { setCurrentUser } = useAppContext();
 
   const onSubmitActualLogin = async (data: LoginFormData) => {
     setIsLoading(true);
@@ -55,9 +49,9 @@ export function LoginForm() {
           name: currentUser.username,
           email: currentUser.email,
         };
-
+        Cookies.set("currentUser", JSON.stringify(user));
         setCurrentUser(user);
-        router.push('/dashboard');
+        router.push('/equipments');
       }
     } catch (err) {
       setError('Login failed. Please check your credentials and try again.');

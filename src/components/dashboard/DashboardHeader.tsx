@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { CalendarDays, Dumbbell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UserSettingsSheet } from './UserSettingsSheet';
-import { AppContext } from '@/context/AppContext';
+import { AppContext, useAppContext } from '@/context/AppContext';
 
 export const DashboardHeader = () => {
-  const appContext = useContext(AppContext);
+  const { currentUser } = useAppContext();
 
-  const username = appContext?.currentUser?.name ?? 'Guest';
+  const username = currentUser?.name ?? 'Guest';
 
   return (
     <header className="p-4 border-b border-border flex justify-between items-center">

@@ -15,7 +15,15 @@
   },
   "equipment": {
     "title": "Equipment",
-    "search": "Search equipment"
+    "search": "Search equipment",
+    "loginToSave": "Login to Save",
+    "done": "Done",
+    "save": "Save",
+    "wantToSave":"Want to save this exercise?",
+    "execution": "Execution",
+    "preparation": "Preparation",
+    "showPreparation": "Show Preparation",
+    "hidePreparation": "Hide Preparation"
   },
   "exercises": {
     "title": "Exercises",

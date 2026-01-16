@@ -1,13 +1,20 @@
 'use client';
 
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { AppContextType, User } from '@/lib/interfaces';
+import { Cookie } from 'lucide-react';
+import Cookies from 'js-cookie';
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [loadingMask, setLoadingMask] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | undefined>();
+
+  useEffect(() => {
+    const storedUser = Cookies.get('currentUser');
+    setCurrentUser(storedUser ? JSON.parse(storedUser) : undefined);
+  }, []);
 
   const value: AppContextType = {
     currentUser: currentUser!,

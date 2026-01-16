@@ -1,18 +1,24 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { Equipment, Usage, Step, Muscle, Media } from '@/lib/interfaces';
+import { Equipment, Usage, Step, Muscle, Media, User } from '@/lib/interfaces';
 import { useEffect, useState } from 'react';
 import { fetchUsageById } from '@/lib/api/equipment';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Carousel } from 'flowbite-react';
 import { index } from 'd3-array';
 import StepSlide from '@/components/equipments/StepSlide';
+import { useAppContext } from '@/context/AppContext';
+import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function StepPage() {
   const params = useParams();
+  const { t } = useTranslation();
+  const { currentUser } = useAppContext();
   const id = params.id; // Access the 'slug' dynamic parameter
   const [usage, setUsage] = useState<Usage>({
     id: 0,
@@ -48,6 +54,8 @@ export default function StepPage() {
     setShowPreparation(!showPreparation);
   };
 
+
+
   return (
     <div>
       <h1 className=" py-3 text-2xl font-bold">{usage.name}</h1>
@@ -65,28 +73,32 @@ export default function StepPage() {
       {showPreparation && (
         <div>
           <div className="mt-6 flex justify-between">
-            <h2 className="py-3 text-xl font-bold">Preparation</h2>
+            <h2 className="py-3 text-xl font-bold">{t('equipment.preparation')}</h2>
             <Button variant="outline" size="sm" onClick={handleShowPreparation}>
-              Hide Preparation
+              {t('equipment.hidePreparation')}
             </Button>
           </div>
           <StepSlide steps={setupSteps} />
         </div>
       )}
       <div className="mt-6 flex justify-between">
-        <div className="py-3 text-xl font-bold">Execution</div>
+        <div className="py-3 text-xl font-bold">{t('equipment.execution')}</div>
         {!showPreparation && (
           <Button variant="outline" size="sm" onClick={handleShowPreparation}>
-            Show Preparation
+            {t('equipment.showPreparation')}
           </Button>
         )}
       </div>
       <StepSlide steps={executeSteps} />
-      <div className="flex py-5 justify-center mt-10">
-        <Button variant="secondary" size="lg" className="w-full bg-white/20">
-          Done
-        </Button>
-      </div>
+      <Link
+        href="/equipments"
+        className={cn(
+          buttonVariants({ variant: 'secondary', size: 'lg' }),
+          'w-full bg-white/20 mt-6'
+        )}
+      >
+        {t('equipment.done')}
+      </Link>
     </div>
   );
 }

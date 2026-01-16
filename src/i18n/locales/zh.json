@@ -15,7 +15,15 @@
   },
   "equipment": {
     "title": "器材",
-    "search": "搜索器材"
+    "search": "搜索器材",
+    "loginToSave": "登录",
+    "done": "完成",
+    "save": "保存",
+    "wantToSave":"是否要保存当前的练习？",
+    "execution": "动作",
+    "preparation": "准备步骤",
+    "showPreparation": "显示准备",
+    "hidePreparation": "隐藏准备"
   },
   "exercises": {
     "title": "练习",
