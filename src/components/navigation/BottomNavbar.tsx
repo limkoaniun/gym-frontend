@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LogIn, Settings, User, Wallet } from 'lucide-react';
+import { LogIn, CalendarHeart, User, House } from 'lucide-react';
 import React from 'react';
 
 type NavItem = {
@@ -16,8 +16,8 @@ export function BottomNavbar() {
 
   const navItems: NavItem[] = [
     { href: '/login', label: 'Login', icon: <LogIn size={22} /> },
-    { href: '/wallet', label: 'Wallet', icon: <Wallet size={22} /> },
-    { href: '/settings', label: 'Settings', icon: <Settings size={22} /> },
+    { href: '/home', label: 'Home', icon: <House size={22} /> },
+    { href: '/schedule', label: 'Schedule', icon: <CalendarHeart size={22} /> },
     { href: '/profile', label: 'Profile', icon: <User size={22} /> },
   ];
 
