@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LogIn, CalendarHeart, User, House } from 'lucide-react';
 import React from 'react';
+import { useAppContext } from '@/context/AppContext';
 
 type NavItem = {
   href: string;
@@ -13,17 +14,23 @@ type NavItem = {
 
 export function BottomNavbar() {
   const pathname = usePathname();
+  const { currentUser } = useAppContext();
 
-  const navItems: NavItem[] = [
+  const baseNavItems: NavItem[] = [
     { href: '/login', label: 'Login', icon: <LogIn size={22} /> },
     { href: '/home', label: 'Home', icon: <House size={22} /> },
     { href: '/schedule', label: 'Schedule', icon: <CalendarHeart size={22} /> },
     { href: '/profile', label: 'Profile', icon: <User size={22} /> },
   ];
 
+  const navItems = currentUser ? baseNavItems.filter(item => item.href !== '/login') : baseNavItems;
+
+  const colsClass =
+    navItems.length === 3 ? 'grid-cols-3' : navItems.length === 4 ? 'grid-cols-4' : 'grid-cols-4'; // fallback
+
   return (
     <nav className="absolute bottom-0 h-[80px] w-full border-t border-white/10  backdrop-blur-md">
-      <div className="grid h-16 max-w-lg grid-cols-4 mx-auto font-medium">
+      <div className={`grid h-16 max-w-lg  mx-auto font-medium ${colsClass}`}>
         {navItems.map(item => (
           <Link
             key={item.href}
