@@ -1,13 +1,15 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import { Bone, Dumbbell, Heart, LogOut, Tags, Users } from 'lucide-react';
+import { Bone, Dumbbell, LayoutDashboard, Heart, LogOut, Tags, Users } from 'lucide-react';
 import SidebarListItem from '@/components/admin/SidebarListItem';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { AppProvider } from '@/context/AppContext';
 
 const sidebarMenuItems = [
+  { itemName: 'Dashboard', icon: <LayoutDashboard />, linkUrl: '/admin' },
   { itemName: 'Equipment', icon: <Dumbbell />, linkUrl: '/admin/equipment' },
   { itemName: 'Training Method', icon: <Heart />, linkUrl: '/admin/training-method' },
   { itemName: 'Muscle', icon: <Bone />, linkUrl: '/admin/muscle' },
@@ -27,7 +29,7 @@ function AdminLayout({ children }: { children: ReactNode }) {
           <div className="flex flex-col gap-2 border-b border-sidebar-border p-4">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg">
-                <img src="/assets/logo.svg" alt="logo" width={40} height={40} />
+                <Image src="/assets/logo.svg" alt="logo" width={40} height={40} />
               </div>
               <div>
                 <h1 className="text-lg font-semibold text-sidebar-foreground">
