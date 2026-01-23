@@ -27,7 +27,9 @@ export function BottomNavbar() {
 
   return (
     <nav className="absolute bottom-0 h-[80px] w-full border-t border-white/10  backdrop-blur-md">
-      <div className={`grid h-16 max-w-lg grid-cols-${navItems.length} mx-auto font-medium`}>
+      <div
+        className={`grid h-16 max-w-lg mx-auto font-medium ${navItems.length === 3 ? 'grid-cols-3' : 'grid-cols-4'}`}
+      >
         {navItems.map(item => (
           <Link
             key={item.href}
