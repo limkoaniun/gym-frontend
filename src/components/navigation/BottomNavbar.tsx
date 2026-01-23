@@ -18,19 +18,16 @@ export function BottomNavbar() {
 
   const baseNavItems: NavItem[] = [
     { href: '/login', label: 'Login', icon: <LogIn size={22} /> },
-    { href: '/home', label: 'Home', icon: <House size={22} /> },
+    { href: '/equipments', label: 'Home', icon: <House size={22} /> },
     { href: '/schedule', label: 'Schedule', icon: <CalendarHeart size={22} /> },
     { href: '/profile', label: 'Profile', icon: <User size={22} /> },
   ];
 
   const navItems = currentUser ? baseNavItems.filter(item => item.href !== '/login') : baseNavItems;
 
-  const colsClass =
-    navItems.length === 3 ? 'grid-cols-3' : navItems.length === 4 ? 'grid-cols-4' : 'grid-cols-4'; // fallback
-
   return (
     <nav className="absolute bottom-0 h-[80px] w-full border-t border-white/10  backdrop-blur-md">
-      <div className={`grid h-16 max-w-lg  mx-auto font-medium ${colsClass}`}>
+      <div className={`grid h-16 max-w-lg grid-cols-${navItems.length} mx-auto font-medium`}>
         {navItems.map(item => (
           <Link
             key={item.href}
