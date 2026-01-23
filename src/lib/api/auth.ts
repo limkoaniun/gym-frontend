@@ -2,9 +2,9 @@ import api from '../axios';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 
-import { LoginPayload, LoginResponse, SignupPayload } from '@/lib/interfaces';
+import { LoginPayload, User, SignupPayload } from '@/lib/interfaces';
 
-export const login = async (data: LoginPayload): Promise<LoginResponse | null> => {
+export const login = async (data: LoginPayload): Promise<User | null> => {
   try {
     const res = await api.post('/auth/login', data);
     return res.data;

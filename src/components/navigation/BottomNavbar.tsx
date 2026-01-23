@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LogIn, CalendarHeart, User, House } from 'lucide-react';
+import { LogIn, Heart, User, House } from 'lucide-react';
 import React from 'react';
 import { useAppContext } from '@/context/AppContext';
 
@@ -19,7 +19,7 @@ export function BottomNavbar() {
   const baseNavItems: NavItem[] = [
     { href: '/login', label: 'Login', icon: <LogIn size={22} /> },
     { href: '/equipments', label: 'Home', icon: <House size={22} /> },
-    { href: '/schedule', label: 'Schedule', icon: <CalendarHeart size={22} /> },
+    { href: '/favorites', label: 'Favorites', icon: <Heart size={22} /> },
     { href: '/profile', label: 'Profile', icon: <User size={22} /> },
   ];
 

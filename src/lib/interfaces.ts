@@ -65,8 +65,12 @@ export interface Equipment {
 
 export interface User {
   id: number;
-  name: string;
+  username: string;
   email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  favouredEquipments: Equipment[];
 }
 
 export interface AppContextType {

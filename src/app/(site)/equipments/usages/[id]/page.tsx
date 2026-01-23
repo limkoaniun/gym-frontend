@@ -5,20 +5,14 @@ import { Equipment, Usage, Step, Muscle, Media, User } from '@/lib/interfaces';
 import { useEffect, useState } from 'react';
 import { fetchUsageById } from '@/lib/api/equipment';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { Carousel } from 'flowbite-react';
-import { index } from 'd3-array';
 import StepSlide from '@/components/equipments/StepSlide';
-import { useAppContext } from '@/context/AppContext';
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
-const API = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 export default function StepPage() {
   const params = useParams();
   const { t } = useTranslation();
-  const { currentUser } = useAppContext();
   const id = params.id; // Access the 'slug' dynamic parameter
   const [usage, setUsage] = useState<Usage>({
     id: 0,
@@ -53,8 +47,6 @@ export default function StepPage() {
   const handleShowPreparation = () => {
     setShowPreparation(!showPreparation);
   };
-
-
 
   return (
     <div>

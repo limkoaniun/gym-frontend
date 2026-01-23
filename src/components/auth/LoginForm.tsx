@@ -45,8 +45,8 @@ export function LoginForm() {
 
       if (currentUser) {
         const user = {
-          id: currentUser.userId,
-          name: currentUser.username,
+          id: currentUser.id,
+          username: currentUser.username,
           email: currentUser.email,
         };
         Cookies.set("currentUser", JSON.stringify(user));
