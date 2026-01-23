@@ -19,7 +19,7 @@
     "loginToSave": "登录",
     "done": "完成",
     "save": "保存",
-    "wantToSave":"是否要保存当前的练习？",
+    "wantToSave": "是否要保存当前的练习？",
     "execution": "动作",
     "preparation": "准备步骤",
     "showPreparation": "显示准备",
@@ -44,5 +44,59 @@
     "firstName": "名",
     "lastName": "姓",
     "userName": "用户名"
+  },
+  "profile": {
+    "notLoggedIn": "请登录查看个人资料",
+    "loginToViewProfile": "登录查看个人资料",
+    "yourStats": "您的统计",
+    "editProfile": "编辑资料",
+    "status": {
+      "active": "活跃"
+    },
+    "stats": {
+      "workoutsCompleted": "完成训练",
+      "favoriteEquipment": "收藏器材",
+      "goalsAchieved": "达成目标",
+      "totalTime": "总时长",
+      "thisMonth": "本月",
+      "items": "个",
+      "total": "总计"
+    },
+    "sections": {
+      "account": "账户",
+      "activity": "活动",
+      "settings": "设置"
+    },
+    "menu": {
+      "accountDetails": "账户详情",
+      "accountDetailsSubtitle": "管理您的个人信息",
+      "changePassword": "修改密码",
+      "changePasswordSubtitle": "更新您的安全设置",
+      "notifications": "通知设置",
+      "notificationsSubtitle": "管理您的通知偏好",
+      "favorites": "收藏夹",
+      "favoritesSubtitle": "您收藏的器材和练习",
+      "workoutHistory": "训练记录",
+      "workoutHistorySubtitle": "查看您的历史训练",
+      "appSettings": "应用设置",
+      "appSettingsSubtitle": "自定义您的应用体验",
+      "helpSupport": "帮助与支持",
+      "helpSupportSubtitle": "获取帮助和联系支持",
+      "logout": "退出登录"
+    },
+    "edit": {
+      "changePhoto": "点击更换头像",
+      "fullName": "全名",
+      "enterName": "输入您的全名",
+      "emailAddress": "邮箱地址",
+      "enterEmail": "输入您的邮箱地址",
+      "preferences": "偏好设置",
+      "emailNotifications": "邮件通知",
+      "pushNotifications": "推送通知"
+    }
+  },
+  "common": {
+    "save": "保存",
+    "cancel": "取消"
   }
 }

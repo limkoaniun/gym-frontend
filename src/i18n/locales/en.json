@@ -19,7 +19,7 @@
     "loginToSave": "Login to Save",
     "done": "Done",
     "save": "Save",
-    "wantToSave":"Want to save this exercise?",
+    "wantToSave": "Want to save this exercise?",
     "execution": "Execution",
     "preparation": "Preparation",
     "showPreparation": "Show Preparation",
@@ -44,5 +44,59 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "userName": "Username"
+  },
+  "profile": {
+    "notLoggedIn": "Please log in to view your profile",
+    "loginToViewProfile": "Log in to view profile",
+    "yourStats": "Your Stats",
+    "editProfile": "Edit Profile",
+    "status": {
+      "active": "Active"
+    },
+    "stats": {
+      "workoutsCompleted": "Workouts Completed",
+      "favoriteEquipment": "Favorite Equipment",
+      "goalsAchieved": "Goals Achieved",
+      "totalTime": "Total Time",
+      "thisMonth": "This Month",
+      "items": "Items",
+      "total": "Total"
+    },
+    "sections": {
+      "account": "Account",
+      "activity": "Activity",
+      "settings": "Settings"
+    },
+    "menu": {
+      "accountDetails": "Account Details",
+      "accountDetailsSubtitle": "Manage your personal information",
+      "changePassword": "Change Password",
+      "changePasswordSubtitle": "Update your security settings",
+      "notifications": "Notifications",
+      "notificationsSubtitle": "Manage your notification preferences",
+      "favorites": "Favorites",
+      "favoritesSubtitle": "Your saved equipment and exercises",
+      "workoutHistory": "Workout History",
+      "workoutHistorySubtitle": "View your past workouts",
+      "appSettings": "App Settings",
+      "appSettingsSubtitle": "Customize your app experience",
+      "helpSupport": "Help & Support",
+      "helpSupportSubtitle": "Get help and contact support",
+      "logout": "Logout"
+    },
+    "edit": {
+      "changePhoto": "Tap to change profile photo",
+      "fullName": "Full Name",
+      "enterName": "Enter your full name",
+      "emailAddress": "Email Address",
+      "enterEmail": "Enter your email address",
+      "preferences": "Preferences",
+      "emailNotifications": "Email Notifications",
+      "pushNotifications": "Push Notifications"
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel"
   }
 }
