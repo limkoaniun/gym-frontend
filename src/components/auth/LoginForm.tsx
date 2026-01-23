@@ -19,6 +19,7 @@ import { LoginButton } from '@/components/auth/LoginButton';
 import { AppContext, useAppContext } from '@/context/AppContext';
 import { useTranslation } from 'react-i18next';
 import Cookies from "js-cookie";
+import { User } from '@/lib/interfaces';
 export function LoginForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -44,14 +45,25 @@ export function LoginForm() {
       const currentUser = await login(data);
 
       if (currentUser) {
-        const user = {
+        const user: User = {
           id: currentUser.id,
           username: currentUser.username,
           email: currentUser.email,
+          role: currentUser.role,
+          firstName: currentUser.firstName,
+          lastName: currentUser.lastName,
+          favouredEquipments: [],
         };
-        Cookies.set("currentUser", JSON.stringify(user));
+        Cookies.set("currentUser", JSON.stringify(user), {
+          path: "/",
+          sameSite: "lax",
+        });
         setCurrentUser(user);
-        router.push('/equipments');
+        if(user.role=='customer') {
+          router.push('/equipments');
+        } else{
+          router.push('/admin');
+        }
       }
     } catch (err) {
       setError('Login failed. Please check your credentials and try again.');
