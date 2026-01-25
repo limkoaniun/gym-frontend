@@ -35,11 +35,11 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
         <div className="relative">
           <Avatar className="h-20 w-20 border-2 border-white/20">
             <AvatarImage
-              src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.name)}&backgroundColor=4f46e5&textColor=ffffff`}
-              alt={user.name}
+              src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.username)}&backgroundColor=4f46e5&textColor=ffffff`}
+              alt={user.username}
             />
             <AvatarFallback className="bg-primary text-primary-foreground text-lg font-semibold">
-              {getInitials(user.name)}
+              {getInitials(user.username)}
             </AvatarFallback>
           </Avatar>
 
@@ -49,7 +49,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
         </div>
 
         <div className="text-center space-y-1">
-          <h1 className="text-2xl font-bold text-white">{user.name}</h1>
+          <h1 className="text-2xl font-bold text-white">{user.username}</h1>
           <p className="text-white/60 text-sm">{user.email}</p>
           <div className="flex items-center justify-center space-x-1 mt-2">
             <div className="w-2 h-2 bg-green-400 rounded-full"></div>

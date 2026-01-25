@@ -27,7 +27,7 @@ export function EditProfileSheet({ user, onSave, children }: EditProfileSheetPro
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    name: user.name,
+    name: user.username,
     email: user.email,
   });
 
@@ -54,7 +54,7 @@ export function EditProfileSheet({ user, onSave, children }: EditProfileSheetPro
 
   const handleCancel = () => {
     setFormData({
-      name: user.name,
+      name: user.username,
       email: user.email,
     });
     setIsOpen(false);

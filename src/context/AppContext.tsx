@@ -2,7 +2,6 @@
 
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { AppContextType, User } from '@/lib/interfaces';
-import { Cookie } from 'lucide-react';
 import Cookies from 'js-cookie';
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);

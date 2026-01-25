@@ -1,15 +1,15 @@
 'use client';
-import React, { useContext } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { CalendarDays, Dumbbell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UserSettingsSheet } from './UserSettingsSheet';
-import { AppContext, useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/AppContext';
 
 export const DashboardHeader = () => {
   const { currentUser } = useAppContext();
 
-  const username = currentUser?.name ?? 'Guest';
+  const username = currentUser?.username ?? 'Guest';
 
   return (
     <header className="p-4 border-b border-border flex justify-between items-center">
