@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -16,9 +15,9 @@ import { PasswordStep } from './PasswordStep';
 import { LoginFooter } from './LoginFooter';
 import SocialMediaButtons from '@/components/ui/socialMedia';
 import { LoginButton } from '@/components/auth/LoginButton';
-import { AppContext, useAppContext } from '@/context/AppContext';
+import { useAppContext } from '@/context/AppContext';
 import { useTranslation } from 'react-i18next';
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 import { User } from '@/lib/interfaces';
 export function LoginForm() {
   const router = useRouter();
@@ -54,19 +53,20 @@ export function LoginForm() {
           lastName: currentUser.lastName,
           favouredEquipments: [],
         };
-        Cookies.set("currentUser", JSON.stringify(user), {
-          path: "/",
-          sameSite: "lax",
+        Cookies.set('currentUser', JSON.stringify(user), {
+          path: '/',
+          sameSite: 'lax',
         });
         setCurrentUser(user);
-        if(user.role=='customer') {
+        if (user.role == 'customer') {
           router.push('/equipments');
-        } else{
+        } else {
           router.push('/admin');
         }
       }
     } catch (err) {
       setError('Login failed. Please check your credentials and try again.');
+      console.error(err);
     } finally {
       setIsLoading(false);
     }

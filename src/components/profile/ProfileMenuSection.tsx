@@ -12,9 +12,10 @@ import {
   Settings,
   HelpCircle,
   LogOut,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useAppContext } from '@/context/AppContext';
 
 interface MenuItemProps {
   icon: React.ReactNode;
@@ -25,14 +26,7 @@ interface MenuItemProps {
   variant?: 'default' | 'danger';
 }
 
-function MenuItem({
-  icon,
-  title,
-  subtitle,
-  href,
-  onClick,
-  variant = 'default'
-}: MenuItemProps) {
+function MenuItem({ icon, title, subtitle, href, onClick, variant = 'default' }: MenuItemProps) {
   const baseClasses =
     'w-full justify-start text-left h-auto py-3 px-4 hover:bg-white/10 transition-colors duration-200';
   const textColorClass =
@@ -40,14 +34,10 @@ function MenuItem({
 
   const content = (
     <div className="flex items-center space-x-3 w-full">
-      <div className={variant === 'danger' ? 'text-red-400' : 'text-white/70'}>
-        {icon}
-      </div>
+      <div className={variant === 'danger' ? 'text-red-400' : 'text-white/70'}>{icon}</div>
       <div className="flex-1">
         <div className={`font-medium ${textColorClass}`}>{title}</div>
-        {subtitle && (
-          <div className="text-xs text-white/50 mt-0.5">{subtitle}</div>
-        )}
+        {subtitle && <div className="text-xs text-white/50 mt-0.5">{subtitle}</div>}
       </div>
       <ChevronRight size={16} className="text-white/40" />
     </div>
@@ -72,10 +62,10 @@ function MenuItem({
 
 export function ProfileMenuSection() {
   const { t } = useTranslation();
+  const { logout } = useAppContext();
 
   const handleLogout = () => {
-    // Implementation for logout
-    console.log('Logout clicked');
+    logout();
     window.location.href = '/login';
   };
 
@@ -84,9 +74,7 @@ export function ProfileMenuSection() {
       {/* Account Section */}
       <div className="bg-white/10 backdrop-blur-md rounded-lg border border-white/10 overflow-hidden">
         <div className="p-4 border-b border-white/10">
-          <h3 className="text-lg font-semibold text-white">
-            {t('profile.sections.account')}
-          </h3>
+          <h3 className="text-lg font-semibold text-white">{t('profile.sections.account')}</h3>
         </div>
         <div className="space-y-1 p-2">
           <MenuItem
@@ -110,9 +98,7 @@ export function ProfileMenuSection() {
       {/* Activity Section */}
       <div className="bg-white/10 backdrop-blur-md rounded-lg border border-white/10 overflow-hidden">
         <div className="p-4 border-b border-white/10">
-          <h3 className="text-lg font-semibold text-white">
-            {t('profile.sections.activity')}
-          </h3>
+          <h3 className="text-lg font-semibold text-white">{t('profile.sections.activity')}</h3>
         </div>
         <div className="space-y-1 p-2">
           <MenuItem
@@ -131,9 +117,7 @@ export function ProfileMenuSection() {
       {/* Settings Section */}
       <div className="bg-white/10 backdrop-blur-md rounded-lg border border-white/10 overflow-hidden">
         <div className="p-4 border-b border-white/10">
-          <h3 className="text-lg font-semibold text-white">
-            {t('profile.sections.settings')}
-          </h3>
+          <h3 className="text-lg font-semibold text-white">{t('profile.sections.settings')}</h3>
         </div>
         <div className="space-y-1 p-2">
           <MenuItem

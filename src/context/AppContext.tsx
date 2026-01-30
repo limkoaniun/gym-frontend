@@ -15,11 +15,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setCurrentUser(storedUser ? JSON.parse(storedUser) : undefined);
   }, []);
 
+  const logout = () => {
+    setCurrentUser(undefined);
+    Cookies.remove('currentUser');
+  };
+
   const value: AppContextType = {
     currentUser: currentUser!,
     setCurrentUser,
     loadingMask,
     setLoadingMask,
+    logout,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
