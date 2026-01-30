@@ -1,27 +1,25 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import Cookies from 'js-cookie';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const storedUser = req.cookies.get("currentUser")?.value;
+  const storedUser = req.cookies.get('currentUser')?.value;
   const currentUser = storedUser ? JSON.parse(storedUser) : undefined;
   const isLoggedIn = currentUser;
-  console.warn('isLoggedIn', isLoggedIn);
 
-  if (!isLoggedIn && pathname.startsWith("/admin")) {
+  if (!isLoggedIn && pathname.startsWith('/admin')) {
     const url = req.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = '/login';
     return NextResponse.redirect(url);
   }
 
-  if (isLoggedIn && pathname.startsWith("/admin") && currentUser.role !== "admin") {
+  if (isLoggedIn && pathname.startsWith('/admin') && currentUser.role !== 'admin') {
     const url = req.nextUrl.clone();
-    url.pathname = "/equipments";
+    url.pathname = '/equipments';
     return NextResponse.redirect(url);
   }
 
   return NextResponse.next();
 }
 
-export const config = { matcher: ["/:path*"] };
+export const config = { matcher: ['/:path*'] };
