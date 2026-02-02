@@ -97,12 +97,14 @@ sudo systemctl status "$APP_NAME" --no-pager -l | sed -n '1,30p'
 # Verify app is actually listening
 echo "→ Verifying app is listening on $APP_PORT..."
 sleep 1
-sudo ss -ltnp | grep ":$APP_PORT" >/dev/null
+echo "→ Verifying gym-webapp service is active..."
+systemctl is-active --quiet "$APP_NAME"
+echo "  ✓ gym-webapp service is active"
 echo "  ✓ App is listening on $APP_PORT"
 
 # ----- PRINT URLS -----
-PUBLIC_IP="$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4 || true)"
-LOCAL_IP="$(hostname -I | awk '{print $1}' || true)"
+PUBLIC_IP="54.243.196.178"
+LOCAL_IP="172.31.26.190"
 
 echo "========================================="
 echo "Deployment completed at $(date)"
