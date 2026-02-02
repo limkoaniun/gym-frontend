@@ -1,25 +1,29 @@
 #!/bin/bash
 set -euo pipefail
 
-# ===== CONFIG =====
+# =========================
+# Gym Web App Deploy Script
+# =========================
+
+# ----- CONFIG -----
 APP_DIR="/var/www/gym-webapp"
 APP_NAME="gym-webapp"
 GIT_REPO="git@github.com:limkoaniun/gym-frontend.git"
 BRANCH="main"
 
-# Next.js usually listens on 3000 and nginx listens on 80
+# Next.js app port (nginx usually serves 80 and proxies to this)
 APP_PORT="${APP_PORT:-3000}"
 
 LOG_DIR="/var/log/gym-webapp"
 LOG_FILE="$LOG_DIR/deploy.log"
 
 export NODE_OPTIONS="--max_old_space_size=2048"
-export NODE_ENV=production
+export NODE_ENV="production"
 
-# Run as ubuntu login shell
+# ----- HELPERS -----
 run_as_ubuntu() { sudo -u ubuntu -H bash -lc "$*"; }
 
-# Ensure dirs and ownership
+# ----- PREP -----
 sudo mkdir -p "$APP_DIR" "$LOG_DIR"
 sudo chown -R ubuntu:ubuntu "$APP_DIR" "$LOG_DIR"
 
@@ -32,20 +36,26 @@ echo "========================================="
 
 trap 'echo "ERROR: Deployment failed at line $LINENO"; exit 1' ERR
 
-# Sanity checks
+# ----- SANITY CHECKS -----
 run_as_ubuntu "command -v git >/dev/null"
 run_as_ubuntu "command -v node >/dev/null"
 run_as_ubuntu "command -v npm  >/dev/null"
 
-# Stop running service before changing files
+# ----- STOP SERVICE -----
 echo "→ Stopping existing service (if running)..."
 sudo systemctl stop "$APP_NAME" || true
 sleep 2
 
-# Checkout or update
+# ----- CHECKOUT OR UPDATE -----
 if [ ! -d "$APP_DIR/.git" ]; then
   echo "→ First-time setup: cloning repository..."
-  # If APP_DIR exists (it does), clone into it
+
+  # If folder isn't empty, refuse to avoid messy state
+  if [ "$(ls -A "$APP_DIR" | wc -l)" -ne 0 ]; then
+    echo "ERROR: $APP_DIR is not empty and has no .git directory"
+    exit 1
+  fi
+
   run_as_ubuntu "cd '$APP_DIR' && git clone -b '$BRANCH' '$GIT_REPO' ."
 else
   echo "→ Updating existing repo to origin/$BRANCH..."
@@ -53,39 +63,44 @@ else
   run_as_ubuntu "cd '$APP_DIR' && git reset --hard 'origin/$BRANCH'"
 fi
 
-# Clean tracked and untracked files (careful: this deletes untracked files)
+# ----- CLEAN WORKSPACE -----
+# Note: no -x, so ignored files like .env.production are not deleted
 echo "→ Cleaning workspace..."
-run_as_ubuntu "cd '$APP_DIR' && git clean -fdx"
+run_as_ubuntu "cd '$APP_DIR' && git clean -fd"
 
-# Verify env
+# ----- VERIFY ENV -----
 echo "→ Verifying .env.production exists..."
 run_as_ubuntu "cd '$APP_DIR' && test -f .env.production"
 echo "  ✓ .env.production found"
 
-# Install deps
+# ----- INSTALL DEPS -----
 echo "→ Installing dependencies..."
 run_as_ubuntu "cd '$APP_DIR' && npm ci"
 echo "  ✓ Dependencies installed"
 
-# Build
+# ----- BUILD -----
 echo "→ Building Next.js app..."
 run_as_ubuntu "cd '$APP_DIR' && npm run build"
 echo "  ✓ Build completed"
 
-# Optional: prune dev deps only if you are sure runtime is fine without them
+# Optional: prune dev deps only if your runtime is confirmed OK without them
 echo "→ Pruning dev dependencies (optional)..."
 run_as_ubuntu "cd '$APP_DIR' && npm prune --omit=dev || true"
 
-# Check app port (not port 80)
-echo "→ Checking app port $APP_PORT..."
-sudo ss -ltnp | grep ":$APP_PORT" && echo "NOTE: something is already listening on $APP_PORT" || echo "✓ $APP_PORT is free"
-
-# Restart service
+# ----- RESTART SERVICE -----
 echo "→ Restarting systemd service..."
 sudo systemctl restart "$APP_NAME"
+
+# Show short status output
 sudo systemctl status "$APP_NAME" --no-pager -l | sed -n '1,30p'
 
-# Print URL dynamically
+# Verify app is actually listening
+echo "→ Verifying app is listening on $APP_PORT..."
+sleep 1
+sudo ss -ltnp | grep ":$APP_PORT" >/dev/null
+echo "  ✓ App is listening on $APP_PORT"
+
+# ----- PRINT URLS -----
 PUBLIC_IP="$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4 || true)"
 LOCAL_IP="$(hostname -I | awk '{print $1}' || true)"
 
@@ -93,6 +108,6 @@ echo "========================================="
 echo "Deployment completed at $(date)"
 echo "========================================="
 echo "Public URL (if nginx on 80): http://${PUBLIC_IP:-$LOCAL_IP}"
-echo "If direct app port:          http://${PUBLIC_IP:-$LOCAL_IP}:$APP_PORT"
+echo "Direct app port:             http://${PUBLIC_IP:-$LOCAL_IP}:$APP_PORT"
 echo "Deploy logs: tail -f $LOG_FILE"
 echo "Service logs: journalctl -u $APP_NAME -f"
