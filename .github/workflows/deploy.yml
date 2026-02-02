@@ -18,4 +18,8 @@ jobs:
           command_timeout: 30m
           script: |
             set -euo pipefail
+            cd /var/www/gym-webapp
+            git fetch origin main
+            git reset --hard origin/main
+            chmod +x /var/www/gym-webapp/scripts/deploy-frontend.sh
             sudo -H bash -lc '/var/www/gym-webapp/scripts/deploy-frontend.sh'
