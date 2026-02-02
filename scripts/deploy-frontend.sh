@@ -94,13 +94,38 @@ sudo systemctl restart "$APP_NAME"
 # Show short status output
 sudo systemctl status "$APP_NAME" --no-pager -l | sed -n '1,30p'
 
-# Verify app is actually listening
+# ----- VERIFY SERVICE -----
+echo "→ Verifying service is running..."
+for i in {1..15}; do
+  if systemctl is-active --quiet "$APP_NAME"; then
+    echo "  ✓ gym-webapp service is active"
+    break
+  fi
+  sleep 3
+done
+
+# If still not active, fail and print logs
+if ! systemctl is-active --quiet "$APP_NAME"; then
+  echo "ERROR: $APP_NAME is not active"
+  systemctl status "$APP_NAME" --no-pager -l | sed -n '1,80p'
+  journalctl -u "$APP_NAME" -n 80 --no-pager
+  exit 1
+fi
+
 echo "→ Verifying app is listening on $APP_PORT..."
-sleep 1
-echo "→ Verifying gym-webapp service is active..."
-systemctl is-active --quiet "$APP_NAME"
-echo "  ✓ gym-webapp service is active"
-echo "  ✓ App is listening on $APP_PORT"
+for i in {1..15}; do
+  if sudo ss -ltnp | grep -q ":$APP_PORT"; then
+    echo "  ✓ App is listening on $APP_PORT"
+    break
+  fi
+  sleep 3
+done
+
+if ! sudo ss -ltnp | grep -q ":$APP_PORT"; then
+  echo "ERROR: Nothing is listening on $APP_PORT"
+  journalctl -u "$APP_NAME" -n 80 --no-pager
+  exit 1
+fi
 
 # ----- PRINT URLS -----
 PUBLIC_IP="54.243.196.178"
