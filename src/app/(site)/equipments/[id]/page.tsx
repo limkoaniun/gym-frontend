@@ -2,7 +2,7 @@
 
 import UsageListItem from '@/components/equipments/UsageListItem';
 import { useParams, useRouter } from 'next/navigation';
-import { Equipment, Usage, User } from '@/lib/interfaces';
+import { Equipment, Usage } from '@/lib/interfaces';
 import { useEffect, useState } from 'react';
 import { addFavoriteEquipments, fetchEquipmentById } from '@/lib/api/equipment';
 import { useAppContext } from '@/context/AppContext';
@@ -30,14 +30,14 @@ export default function UsagesPage() {
     fetchEquipmentById(id as string).then((data: Equipment) => {
       setEquipment(data);
     });
-  }, []);
+  }, [id]);
 
   const handleClick = (id: number | string) => {
     router.push(`/equipments/usages/${id}`);
   };
 
   const handleSave = () => {
-    addFavoriteEquipments(id as string).then((data:User)=>{
+    addFavoriteEquipments(id as string).then(() => {
       toast.success('The equipment has been saved to your favourites');
     });
   };
@@ -88,7 +88,6 @@ export default function UsagesPage() {
           </Link>
         </div>
       )}
-
     </div>
   );
 }

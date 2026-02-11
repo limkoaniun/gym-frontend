@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { GoogleIcon, WeChatIcon } from '@/components/ui/icons';
-import { Apple, Phone } from 'lucide-react';
+import { Apple } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

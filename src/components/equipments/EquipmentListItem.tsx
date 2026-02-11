@@ -1,4 +1,5 @@
 import { ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 import { Equipment } from '@/lib/interfaces';
 
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -13,9 +14,11 @@ const EquipmentListItem = ({ equipment, onClick }: Props) => {
     <div onClick={onClick} className="cursor-pointer">
       <div className="w-full max-w-md sm:max-w-xl lg:max-w-3xl mx-auto my-2">
         <div className="flex w-full items-center bg-inherit rounded shadow-sm overflow-hidden cursor-pointer hover:bg-white/5 transition-colors">
-          <img
+          <Image
             src={`${API}/medias/${equipment.medias[0]?.id}`}
             alt={equipment.name}
+            width={80}
+            height={80}
             className="h-20 w-20 m-4 flex-none object-cover rounded-2xl"
           />
 

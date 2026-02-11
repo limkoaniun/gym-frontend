@@ -16,12 +16,12 @@ export default function Page() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if(currentUser) {
+    if (currentUser) {
       fetchUserById(currentUser.id).then((data: User) => {
         setEquipments(data.favouredEquipments);
       });
     }
-  }, []);
+  }, [currentUser]);
 
   const handleClick = (id: number | string) => {
     router.push(`/equipments/${id}`);
@@ -30,7 +30,8 @@ export default function Page() {
   return (
     <>
       <h1 className=" py-3 text-2xl font-bold flex justify-center">
-        <Heart color="#ec5555" strokeWidth={4} size={30} className="mx-2" /> {t('profile.menu.favorites')}
+        <Heart color="#ec5555" strokeWidth={4} size={30} className="mx-2" />{' '}
+        {t('profile.menu.favorites')}
       </h1>
 
       <div className="flex flex-col mt-1 overflow-auto h-[calc(100%-100px)]">

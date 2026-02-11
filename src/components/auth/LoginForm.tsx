@@ -22,7 +22,7 @@ import { User } from '@/lib/interfaces';
 export function LoginForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [step, setStep] = React.useState<'email' | 'password'>('email');
+  const [step] = React.useState<'email' | 'password'>('email');
   const [error, setError] = React.useState<string | null>(null);
   const { t } = useTranslation();
 

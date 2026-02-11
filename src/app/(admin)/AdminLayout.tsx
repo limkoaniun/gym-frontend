@@ -85,9 +85,7 @@ function AdminLayoutInner({ children }: { children: ReactNode }) {
         </div>
       </div>
 
-      <main className="flex-grow p-3 overflow-auto bg-[#0A080B]">
-        {children}
-      </main>
+      <main className="flex-grow p-3 overflow-auto bg-[#0A080B]">{children}</main>
     </div>
   );
 }

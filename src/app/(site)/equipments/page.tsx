@@ -2,7 +2,7 @@
 
 import EquipmentListItem from '@/components/equipments/EquipmentListItem';
 import { Equipment } from '@/lib/interfaces';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { searchEquipments, searchEquipmentsByImage } from '@/lib/api/equipment';
 import { useAppContext } from '@/context/AppContext';
 import SearchBar from '@/components/dashboard/SearchBar';
@@ -13,9 +13,19 @@ export default function Page() {
   const { setLoadingMask } = useAppContext();
   const router = useRouter();
 
-  useEffect(() => {
-    fetchEquipmentViaTextSearching();
-  }, []);
+  const fetchEquipmentViaTextSearching = useCallback(
+    (query?: string) => {
+      setLoadingMask(true);
+      searchEquipments(query)
+        .then(data => {
+          setEquipments(data as Equipment[]);
+        })
+        .finally(() => {
+          setLoadingMask(false);
+        });
+    },
+    [setLoadingMask]
+  );
 
   const fetchEquipmentViaImageSearching = (file: File) => {
     setLoadingMask(true);
@@ -28,16 +38,9 @@ export default function Page() {
       });
   };
 
-  const fetchEquipmentViaTextSearching = (query?: string) => {
-    setLoadingMask(true);
-    searchEquipments(query)
-      .then(data => {
-        setEquipments(data as Equipment[]);
-      })
-      .finally(() => {
-        setLoadingMask(false);
-      });
-  };
+  useEffect(() => {
+    fetchEquipmentViaTextSearching();
+  }, [fetchEquipmentViaTextSearching]);
 
   const handleTextSearch = (inputText: string) => {
     fetchEquipmentViaTextSearching(inputText);

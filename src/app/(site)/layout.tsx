@@ -14,6 +14,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark --font-body">
       <body>
+        {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
         {/* global background image */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-60"
@@ -23,7 +24,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90" />
         {/* all pages go here */}
         <ClientLayout>{children}</ClientLayout>
-        <ToastContainer position="top-center"/>
+        <ToastContainer position="top-center" />
       </body>
     </html>
   );

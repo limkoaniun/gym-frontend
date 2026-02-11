@@ -22,6 +22,7 @@ function ClientLayoutContent({ children }: { children: ReactNode }) {
 
   return (
     <div className="max-w-[700px] mx-auto px-4 relative h-screen">
+      {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
       {/* global header */}
       <header className="h-[100px] w-full flex items-center justify-between">
         <p className="text-white/60 text-sm font-semibold tracking-wider uppercase">

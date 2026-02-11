@@ -1,6 +1,6 @@
-import { ChevronRight } from 'lucide-react';
 import { Step } from '@/lib/interfaces';
 import { Carousel } from 'flowbite-react';
+import Image from 'next/image';
 import { useState } from 'react';
 
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -21,12 +21,15 @@ const StepSlide = ({ steps }: Props) => {
       <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
         <Carousel slide={false} onSlideChange={handleSlideChange}>
           {steps.map(step => (
-            <img
-              src={`${API}/medias/${step.medias[0]?.id}`}
-              alt={step.title}
-              className="object-cover w-full h-full"
-              key={`execute-img-${step.medias[0]?.id}`}
-            />
+            <div key={`execute-img-${step.medias[0]?.id}`} className="relative w-full h-full">
+              <Image
+                src={`${API}/medias/${step.medias[0]?.id}`}
+                alt={step.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 896px) 100vw, 896px"
+              />
+            </div>
           ))}
         </Carousel>
       </div>

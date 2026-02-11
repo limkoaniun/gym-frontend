@@ -4,9 +4,7 @@ import React, { useState, useRef, type ChangeEvent, type FormEvent } from 'react
 import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
 import { EquipmentForm } from '@/components/dashboard/EquipmentForm';
 import { ImagePreview } from '@/components/dashboard/ImagePreview';
-import { useToast } from '@/hooks/use-toast'; // this hasn't been changed to toastify yet
-// import { identifyEquipment } from '@/ai/flows/identifyEquipmentFlow'; // Temporarily disabled - AI dependencies removed
-import Cookies from 'js-cookie';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Page() {
   const [equipmentName, setEquipmentName] = useState('');

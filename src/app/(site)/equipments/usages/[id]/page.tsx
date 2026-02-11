@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { Equipment, Usage, Step, Muscle, Media, User } from '@/lib/interfaces';
+import { Usage, Step } from '@/lib/interfaces';
 import { useEffect, useState } from 'react';
 import { fetchUsageById } from '@/lib/api/equipment';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -40,7 +40,7 @@ export default function StepPage() {
       setSetupSteps(newSetups);
       setExecuteSteps(newExecutes);
     });
-  }, []);
+  }, [id]);
 
   const [showPreparation, setShowPreparation] = useState(false);
 
