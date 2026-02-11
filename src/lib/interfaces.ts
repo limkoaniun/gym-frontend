@@ -23,7 +23,7 @@ export interface SignupErrors {
 }
 
 export interface Muscle {
-  id: number;
+  id?: number;
   name: string;
 }
 
@@ -64,13 +64,15 @@ export interface Equipment {
 }
 
 export interface User {
-  id: number;
+  id?: number;
   username: string;
+  password: string;
   email: string;
   firstName: string;
   lastName: string;
   role: string;
   favouredEquipments: Equipment[];
+  fullName?: string;
 }
 
 export interface AppContextType {

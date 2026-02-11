@@ -87,7 +87,6 @@ function AdminLayoutInner({ children }: { children: ReactNode }) {
 
       <main className="flex-grow p-3 overflow-auto bg-[#0A080B]">
         {children}
-        <div>current url = {pathName}</div>
       </main>
     </div>
   );

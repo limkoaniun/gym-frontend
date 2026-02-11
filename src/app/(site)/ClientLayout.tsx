@@ -31,7 +31,7 @@ function ClientLayoutContent({ children }: { children: ReactNode }) {
       </header>
 
       {/* page specific content */}
-      <main className=" mb-[100px] relative overflow-scroll h-[calc(100vh-180px)] w-full box-border">
+      <main className=" mb-[100px] relative h-[calc(100vh-180px)] w-full box-border">
         {children}
       </main>
 
