@@ -12,6 +12,19 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
+  async rewrites() {
+    // Only proxy API calls in development to avoid CORS issues
+    // Production uses direct backend calls with proper CORS configuration
+    if (process.env.NODE_ENV === 'development') {
+      return [
+        {
+          source: '/api/:path*',
+          destination: 'http://localhost:8080/api/:path*',
+        },
+      ];
+    }
+    return [];
+  },
   images: {
     remotePatterns: [
       {

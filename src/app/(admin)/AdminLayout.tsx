@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { AppProvider, useAppContext } from '@/context/AppContext';
 
 const sidebarMenuItems = [
-  { itemName: 'Dashboard', icon: <LayoutDashboard />, linkUrl: '/admin' },
+  { itemName: 'Dashboard', icon: <LayoutDashboard />, linkUrl: '/admin/dashboard' },
   { itemName: 'Equipment', icon: <Dumbbell />, linkUrl: '/admin/equipment' },
   { itemName: 'Training Method', icon: <Heart />, linkUrl: '/admin/training-method' },
   { itemName: 'Muscle', icon: <Bone />, linkUrl: '/admin/muscle' },
@@ -38,7 +38,7 @@ function AdminLayoutInner({ children }: { children: ReactNode }) {
             </div>
             <div>
               <h1 className="text-lg font-semibold text-sidebar-foreground">
-                <Link href="/admin">GymApp Admin</Link>
+                <Link href="/admin/dashboard">GymApp Admin</Link>
               </h1>
               <p className="text-xs text-muted-foreground">Management System</p>
             </div>
