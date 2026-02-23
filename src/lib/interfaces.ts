@@ -82,3 +82,7 @@ export interface AppContextType {
   setLoadingMask: (value: boolean) => void;
   logout: () => void;
 }
+export interface Tag {
+  id?: number;
+  name: string;
+}
