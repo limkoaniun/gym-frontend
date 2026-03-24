@@ -1,7 +1,7 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import { Bone, Dumbbell, LayoutDashboard, Heart, LogOut, Tags, Users } from 'lucide-react';
+import { Bone, Dumbbell, LayoutDashboard, Images, LogOut, Tags, Users } from 'lucide-react';
 import SidebarListItem from '@/components/admin/SidebarListItem';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -11,8 +11,8 @@ import { AppProvider, useAppContext } from '@/context/AppContext';
 const sidebarMenuItems = [
   { itemName: 'Dashboard', icon: <LayoutDashboard />, linkUrl: '/admin' },
   { itemName: 'Equipment', icon: <Dumbbell />, linkUrl: '/admin/equipment' },
-  { itemName: 'Training Method', icon: <Heart />, linkUrl: '/admin/training-method' },
-  { itemName: 'Muscle', icon: <Bone />, linkUrl: '/admin/muscle' },
+  { itemName: 'Medias', icon: <Images />, linkUrl: '/admin/medias' },
+  { itemName: 'Muscles', icon: <Bone />, linkUrl: '/admin/muscles' },
   { itemName: 'Tags', icon: <Tags />, linkUrl: '/admin/tags' },
   { itemName: 'Users', icon: <Users />, linkUrl: '/admin/users' },
 ];

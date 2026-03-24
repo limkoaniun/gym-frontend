@@ -8,4 +8,12 @@ const api = axios.create({
   withCredentials: true,
 });
 
+export const fileApi = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+  withCredentials: true,
+});
+
 export default api;
