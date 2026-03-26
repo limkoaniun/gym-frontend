@@ -115,6 +115,11 @@ export default function Medias() {
     });
   };
 
+  const editMediaIdAndName = (media: Media) => () => {
+    setEditingId(media.id);
+    setEditingName(media.name);
+  };
+
   return (
     <>
       <AdminHeader title="Medias" icon={<Images />} subtitle="Manage Medias" />
@@ -190,8 +195,7 @@ export default function Medias() {
       </div>
       <div className="flex flex-row flex-wrap">
         {medias.map(media => (
-          // eslint-disable-next-line react/jsx-key
-          <div className="relative m-6 max-w-xs">
+          <div className="relative m-6 max-w-xs" key={media.id}>
             <Card
               className="max-w-xs overflow-hidden"
               renderImage={() => (
@@ -215,10 +219,7 @@ export default function Medias() {
                     variant="outline"
                     size="icon"
                     className="ms-6"
-                    onClick={() => {
-                      setEditingId(media.id);
-                      setEditingName(media.name);
-                    }}
+                    onClick={editMediaIdAndName(media)}
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
@@ -232,12 +233,7 @@ export default function Medias() {
                     value={editingName}
                     onChange={e => setEditingName(e.target.value)}
                   />
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="ms-6"
-                    onClick={handleSaveEdit}
-                  >
+                  <Button variant="outline" size="icon" className="ms-6" onClick={handleSaveEdit}>
                     <Check className="h-4 w-4" />
                   </Button>
                 </div>
