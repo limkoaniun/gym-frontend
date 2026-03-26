@@ -29,7 +29,7 @@ function AdminLayoutInner({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex h-screen">
-      <div className="w-64 p-1 bg-[#17181A]">
+      <div className="w-64 p-1 bg-[#17181A] shrink-0">
         {/* Logo */}
         <div className="flex flex-col gap-2 border-b border-sidebar-border p-4">
           <div className="flex items-center gap-3">
