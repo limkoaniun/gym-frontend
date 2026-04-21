@@ -1,6 +1,6 @@
 'use client';
 
-import { Images, Plus, X, MoveUp, MoveDown, SquarePen, Check, Pencil } from 'lucide-react';
+import { Images, Plus, X, MoveUp, MoveDown, Check, Pencil } from 'lucide-react';
 import { Card, Modal, ModalBody, ModalFooter, ModalHeader } from 'flowbite-react';
 import { Dropdown, DropdownItem } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';

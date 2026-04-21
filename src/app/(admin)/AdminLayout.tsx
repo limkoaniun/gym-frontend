@@ -10,7 +10,7 @@ import { AppProvider, useAppContext } from '@/context/AppContext';
 
 const sidebarMenuItems = [
   { itemName: 'Dashboard', icon: <LayoutDashboard />, linkUrl: '/admin' },
-  { itemName: 'Equipment', icon: <Dumbbell />, linkUrl: '/admin/equipment' },
+  { itemName: 'Equipments', icon: <Dumbbell />, linkUrl: '/admin/equipments' },
   { itemName: 'Medias', icon: <Images />, linkUrl: '/admin/medias' },
   { itemName: 'Muscles', icon: <Bone />, linkUrl: '/admin/muscles' },
   { itemName: 'Tags', icon: <Tags />, linkUrl: '/admin/tags' },

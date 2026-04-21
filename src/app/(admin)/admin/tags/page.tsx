@@ -4,7 +4,15 @@ import { CircleCheck, CircleX, Plus, Search, Tags, Trash2 } from 'lucide-react';
 import AdminHeader from '@/components/admin/AdminHeader';
 import React, { useEffect, useState } from 'react';
 import { Tag } from '@/lib/interfaces';
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, TextInput } from 'flowbite-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+  TextInput,
+} from 'flowbite-react';
 import { Button } from '@/components/ui/button';
 import { addTag, delTag, getAllTags } from '@/lib/api/tag';
 import { toast } from 'react-toastify';
@@ -17,50 +25,50 @@ export default function TagsPage() {
   useEffect(() => {
     fetchTagsFromApi();
   }, []);
-  const fetchTagsFromApi =()=>{
-  getAllTags().then(data =>{
-    setAllTags(data as Tag[]);
-    setResults(data as Tag[]);
-  });
+  const fetchTagsFromApi = () => {
+    getAllTags().then(data => {
+      setAllTags(data as Tag[]);
+      setResults(data as Tag[]);
+    });
   };
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const keyword = e.target.value.trim().toLowerCase();
-        const results = allTags.filter(tag =>{
-          return tag.name.toLowerCase().includes(keyword);
-        })
-        setResults(results);
+    const keyword = e.target.value.trim().toLowerCase();
+    const results = allTags.filter(tag => {
+      return tag.name.toLowerCase().includes(keyword);
+    });
+    setResults(results);
   };
-  const handleDelClick = (currentId?: number)=>{
-    if(currentId){
-      if (confirm("Are you sure to delete this tag?")){
-        delTag(String(currentId)).then(data=>{
+  const handleDelClick = (currentId?: number) => {
+    if (currentId) {
+      if (confirm('Are you sure to delete this tag?')) {
+        delTag(String(currentId)).then(data => {
           if (data) {
             fetchTagsFromApi();
             toast.success('The tag has been deleted successfully');
           } else {
             toast.error('Error: cannot delete the tag, because still in use.');
           }
-        })
+        });
       }
     }
-  }
-  const handleAddClick = () =>{
-          const newTag = { id: 1000, name: editingTagName };
-          setResults([...allTags, newTag]);
-          setEditingTag(newTag);
-  }
+  };
+  const handleAddClick = () => {
+    const newTag = { id: 1000, name: editingTagName };
+    setResults([...allTags, newTag]);
+    setEditingTag(newTag);
+  };
   const handleTagNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditingTagName(e.target.value);
   };
-  const handleSaveClick =() =>{
+  const handleSaveClick = () => {
     const newTag: Tag = { ...editingTag, name: editingTagName };
-      if (newTag){
-          addTag(newTag).then(() => {
-            fetchTagsFromApi();
-            toast.success('The tag has been added.');
-          });
-      }
-  }
+    if (newTag) {
+      addTag(newTag).then(() => {
+        fetchTagsFromApi();
+        toast.success('The tag has been added.');
+      });
+    }
+  };
   return (
     <>
       <AdminHeader title="Tags" icon={<Tags />} subtitle="Manage Tags" />
