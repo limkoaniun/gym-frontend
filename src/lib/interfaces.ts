@@ -58,7 +58,7 @@ export interface Equipment {
   id: number;
   name: string;
   description: string;
-  tags: string[];
+  tags: Tag[];
   usages: Usage[];
   medias: Media[];
 }

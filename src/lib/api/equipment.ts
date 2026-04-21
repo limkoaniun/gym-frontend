@@ -1,5 +1,5 @@
 import api from '../axios';
-import { Equipment, Usage, User } from '@/lib/interfaces';
+import { Equipment, Muscle, Usage, User } from '@/lib/interfaces';
 
 export async function searchEquipments(query?: string): Promise<Equipment[]> {
   let res;
@@ -37,5 +37,10 @@ export async function fetchUsageById(id: string): Promise<Usage> {
 
 export async function addFavoriteEquipments(equipmentId: string): Promise<User> {
   const res = await api.post('/users/favours', { equipmentId });
+  return res.data;
+}
+
+export async function createEquipment(equipment: Equipment): Promise<Equipment> {
+  const res = await api.post(`/equipments`, equipment);
   return res.data;
 }
