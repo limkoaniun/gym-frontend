@@ -4,14 +4,26 @@ import { Dumbbell, SquarePlus, X } from 'lucide-react';
 import AdminHeader from '@/components/admin/AdminHeader';
 import React, { useEffect, useState } from 'react';
 import MediaDialog from '@/components/admin/MediaDialog';
-import { Equipment, Media, Tag } from '@/lib/interfaces';
-import { Card, Label, TextInput, Dropdown, DropdownItem } from 'flowbite-react';
+import { Equipment, Media, Tag, Usage, Muscle, Step } from '@/lib/interfaces';
+import {
+  Card,
+  Label,
+  TextInput,
+  Dropdown,
+  DropdownItem,
+  Table,
+  TableRow,
+  TableHeadCell,
+  TableHead, TableBody, TableCell,
+} from 'flowbite-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { createEquipment } from '@/lib/api/equipment';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { getAllTags } from '@/lib/api/tag';
+import UsageEdit from '@/components/admin/UsageEdit';
+import StepEdit from '@/components/admin/StepEdit';
 
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -19,7 +31,6 @@ export default function EquipmentPage() {
   const [selectedMedia, setSelectedMedia] = useState<Media[]>([]);
   const [equipment, setEquipment] = useState<Equipment>({
     description: '',
-    id: 0,
     medias: [],
     name: '',
     tags: [],
@@ -27,6 +38,10 @@ export default function EquipmentPage() {
   });
   const [tags, setTags] = useState<Tag[]>([]);
   const [selectedTag, setSelectedTag] = useState<Tag | undefined>();
+  const [selectedUsageIdx, setSelectedUsageIdx] = useState<number>(-1);
+  const [usages, setUsages] = useState<Usage[]>([]);
+  const [selectedStepIdx, setSelectedStepIdx] = useState<number>(-1)
+
 
   const fetchAllTags = () => {
     getAllTags().then(data => setTags(data));
@@ -41,8 +56,8 @@ export default function EquipmentPage() {
   };
 
   const onSave = () => {
-    console.log({ ...equipment, medias: selectedMedia });
-    createEquipment({ ...equipment, medias: selectedMedia })
+    console.log({ ...equipment, medias: selectedMedia, usages: usages});
+    createEquipment({ ...equipment, medias: selectedMedia, usages: usages })
       .then(data => {
         setEquipment(data);
         toast.success('The Equipment has been added.');
@@ -71,6 +86,45 @@ export default function EquipmentPage() {
   const handleRemoveTag = (tag:Tag) => {
     setEquipment({...equipment, tags:[...equipment.tags].filter(t=> t !== tag)})
   };
+
+  const handleAddUsage = () => {
+    setUsages([...usages, {
+      name: 'New Usage',
+      description: '',
+      muscles: [],
+      steps: [],
+      medias: [],
+    }]);
+  };
+
+  const updateUsage = (usage:Usage) => {
+    const newUsages = [...usages];
+    newUsages[selectedUsageIdx] = usage;
+    setUsages(newUsages);
+  }
+
+  const handleAddStep = (usageIdx: number) => {
+    setSelectedUsageIdx(usageIdx);
+    const newUsages = [...usages];
+    newUsages[usageIdx].steps = [...newUsages[usageIdx].steps, {
+      title: 'New Step',
+      instruction: '',
+      setUp: false,
+      medias: [],
+    }];
+    setSelectedStepIdx(newUsages[usageIdx].steps.length -1);
+    setUsages(newUsages);
+
+  }
+
+  const updateStep = (step:Step) => {
+    console.log('updated step: ', step)
+    const newUsages = [...usages];
+    newUsages[selectedUsageIdx].steps[selectedStepIdx] = step;
+    setUsages(newUsages);
+    setSelectedStepIdx(-1);
+    setSelectedUsageIdx(-1);
+  }
 
   return (
     <>
@@ -113,7 +167,7 @@ export default function EquipmentPage() {
                     className="me-1 inline-flex items-center rounded-md bg-pink-400/10 px-2 py-1 text-xs font-medium text-orange-400 inset-ring inset-ring-pink-400/20"
                   >
                     {tag.name}
-                    <X onClick={() => handleRemoveTag(tag)} className="h-4 w-4 cursor-pointer"/>
+                    <X onClick={() => handleRemoveTag(tag)} className="h-4 w-4 cursor-pointer" />
                   </span>
                 ))}
               </div>
@@ -122,7 +176,7 @@ export default function EquipmentPage() {
               <div className="mb-2 block h-10 py-2">
                 <Label htmlFor="media">Select Media</Label>
               </div>
-              <MediaDialog attachMediaHandler={setSelectedMedia} />
+              <MediaDialog attachMediaHandler={setSelectedMedia}/>
             </div>
             <div className="flex flex-wrap">
               {selectedMedia.map(media => (
@@ -144,6 +198,45 @@ export default function EquipmentPage() {
                   </Card>
                 </div>
               ))}
+            </div>
+            <div className="flex flex-wrap">
+              <div className="mb-2 block h-10 py-2">
+                <Label htmlFor="usages">Usages</Label>
+              </div>
+              <Button onClick={()=>handleAddUsage()} variant="ghost" size="sm">
+                <SquarePlus className=" h-5 w-5" />
+              </Button>
+            </div>
+            <div className="mt-3">
+              <Table striped>
+                <TableHead>
+                <TableRow>
+                  <TableHeadCell>Usage Name</TableHeadCell>
+                  <TableHeadCell>Steps Name</TableHeadCell>
+                  <TableHeadCell> </TableHeadCell>
+                </TableRow>
+              </TableHead>
+                <TableBody>
+                  {usages.map((usage, idx) => (
+                    <TableRow>
+                      <TableCell>{usage.name}</TableCell>
+                      <TableCell>{usage.steps.map((step, stepIdx) => <div className="cursor-pointer" onClick={() => {
+                        setSelectedUsageIdx(idx);
+                        setSelectedStepIdx(stepIdx);
+                      }}>{step.title}</div>)}</TableCell>
+                      <TableCell>
+                        <Button onClick={() => {
+                          setSelectedUsageIdx(idx);
+                          setSelectedStepIdx(-1);
+                        }} variant="secondary" size="sm" className="me-5">Edit</Button>
+                        <Button onClick={() => handleAddStep(idx)} variant="secondary" size="sm">+ Step</Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              {selectedUsageIdx >= 0 && selectedStepIdx < 0  && <UsageEdit usage={usages[selectedUsageIdx]} updateUsageHandler={updateUsage}/>}
+              {selectedStepIdx >= 0 && <StepEdit step={usages[selectedUsageIdx].steps[selectedStepIdx]} updateStepHandler={updateStep}/>}
             </div>
             <div className="flex justify-evenly">
               <Button onClick={onSave}>Save </Button>

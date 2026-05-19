@@ -51,6 +51,7 @@ export default function StepPage() {
   return (
     <div>
       <h1 className=" py-3 text-2xl font-bold">{usage.name}</h1>
+      <div className="py3 text-l">{usage.description}</div>
       <div className="my-4 flex-col">
         {usage.muscles.map(muscle => (
           <span

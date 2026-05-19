@@ -28,7 +28,7 @@ export interface Muscle {
 }
 
 export interface Step {
-  id: number;
+  id?: number;
   title: string;
   instruction: string;
   setUp: boolean;
@@ -36,7 +36,7 @@ export interface Step {
 }
 
 export interface Usage {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   muscles: Muscle[];
@@ -55,7 +55,7 @@ export interface Media {
 }
 
 export interface Equipment {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   tags: Tag[];

@@ -32,7 +32,7 @@ export default function UsagesPage() {
     });
   }, [id]);
 
-  const handleClick = (id: number | string) => {
+  const handleClick = (id: number | string | undefined) => {
     router.push(`/equipments/usages/${id}`);
   };
 

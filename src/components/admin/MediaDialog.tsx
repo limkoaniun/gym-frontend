@@ -12,7 +12,7 @@ import Image from 'next/image';
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 type MediaDialogProps = {
-  attachMediaHandler: React.Dispatch<React.SetStateAction<Media[]>>;
+  attachMediaHandler: (medias: Media[]) => void;
 };
 
 export default function MediaDialog({ attachMediaHandler }: MediaDialogProps) {
