@@ -41,7 +41,7 @@ export default function Page() {
               <EquipmentListItem
                 equipment={equipment}
                 key={equipment.id}
-                onClick={() => handleClick(equipment.id)}
+                onClick={() => handleClick(equipment.id!)}
               />
             ))}
         </div>
