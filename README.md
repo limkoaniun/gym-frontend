@@ -4,7 +4,7 @@ A modern gym management application built with Next.js and TypeScript.
 
 ## 🚀 Tech Stack
 
-- **Framework**: Next.js 15.3.3 with TypeScript
+- **Framework**: Next.js 15.5 with TypeScript
 - **Styling**: Tailwind CSS with custom configuration
 - **UI Components**: Radix UI primitives
 - **Icons**: Lucide React
@@ -38,18 +38,19 @@ npm install
 
 ### 3. Environment Configuration
 
-Create a `.env.local` file in the root directory:
+Copy the env schema template to `.env.development` and fill in the API URL:
 
 ```bash
-cp .env.local.example .env.local
+cp .env.example .env.development
 ```
 
-Add the following environment variables:
+Then edit `.env.development`:
 
 ```env
-# API Configuration
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/api
 ```
+
+`.env.production` is committed and points at the live API (`https://burnmyrice.today/api`) — you usually don't need to touch it locally.
 
 **Important**: Make sure your backend API is running on `http://localhost:8080` before starting the frontend.
 
@@ -63,13 +64,16 @@ The application will be available at `http://localhost:9002`
 
 ## 🔧 Available Scripts
 
-| Command             | Description                                          |
-| ------------------- | ---------------------------------------------------- |
-| `npm run dev`       | Start development server with Turbopack on port 9002 |
-| `npm run build`     | Build the application for production                 |
-| `npm start`         | Start production server                              |
-| `npm run lint`      | Run ESLint for code quality checks                   |
-| `npm run typecheck` | Run TypeScript type checking                         |
+| Command                | Description                                          |
+| ---------------------- | ---------------------------------------------------- |
+| `npm run dev`          | Start development server with Turbopack on port 9002 |
+| `npm run build`        | Build the application for production                 |
+| `npm start`            | Start production server                              |
+| `npm run lint`         | Run ESLint for code quality checks                   |
+| `npm run lint:fix`     | Run ESLint with auto-fix                             |
+| `npm run typecheck`    | Run TypeScript type checking                         |
+| `npm run format`       | Format all files with Prettier                       |
+| `npm run format:check` | Verify all files are formatted (no writes)           |
 
 ## 📁 Project Structure
 
@@ -99,19 +103,23 @@ tsconfig.json        # TypeScript configuration
 
 ### Git Workflow
 
-1. Create feature branches from `main`
-2. Make commits with descriptive messages
-3. Run type checking and linting before pushing
-4. Create pull requests for code review
+This repo uses a direct-to-`main` workflow with automated quality gates and a push-triggered deploy:
 
-### Before Pushing Code
+- Commit directly to `main` — pushes to `main` trigger an automatic EC2 deploy via `.github/workflows/deploy.yml`.
+- Husky hooks enforce quality gates so the deploy stays green. They install automatically on `npm install` (via the `prepare` script):
+  - **pre-commit**: `lint-staged` runs Prettier on staged `.ts`/`.tsx`/`.js`/`.jsx`/`.json`/`.css`/`.md` files and re-stages the formatted output.
+  - **pre-push**: `tsc --noEmit` + `next lint` block the push if either fails.
+- Use descriptive commit messages — they double as the deploy changelog.
 
-Always run these commands to ensure code quality:
+### Running Checks Manually
+
+The hooks handle the common cases, but you can run any check manually:
 
 ```bash
-npm run typecheck  # Check for TypeScript errors
-npm run lint       # Check for linting issues
-npm run build      # Ensure the app builds successfully
+npm run typecheck  # TypeScript errors
+npm run lint       # ESLint
+npm run format     # Format the whole repo with Prettier
+npm run build      # Full production build (slowest, most thorough)
 ```
 
 ## 🔧 Development Tips
