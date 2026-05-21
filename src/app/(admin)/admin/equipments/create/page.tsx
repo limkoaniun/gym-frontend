@@ -14,7 +14,9 @@ import {
   Table,
   TableRow,
   TableHeadCell,
-  TableHead, TableBody, TableCell,
+  TableHead,
+  TableBody,
+  TableCell,
 } from 'flowbite-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -40,8 +42,7 @@ export default function EquipmentPage() {
   const [selectedTag, setSelectedTag] = useState<Tag | undefined>();
   const [selectedUsageIdx, setSelectedUsageIdx] = useState<number>(-1);
   const [usages, setUsages] = useState<Usage[]>([]);
-  const [selectedStepIdx, setSelectedStepIdx] = useState<number>(-1)
-
+  const [selectedStepIdx, setSelectedStepIdx] = useState<number>(-1);
 
   const fetchAllTags = () => {
     getAllTags().then(data => setTags(data));
@@ -56,7 +57,7 @@ export default function EquipmentPage() {
   };
 
   const onSave = () => {
-    console.log({ ...equipment, medias: selectedMedia, usages: usages});
+    console.log({ ...equipment, medias: selectedMedia, usages: usages });
     createEquipment({ ...equipment, medias: selectedMedia, usages: usages })
       .then(data => {
         setEquipment(data);
@@ -83,48 +84,53 @@ export default function EquipmentPage() {
     }
   };
 
-  const handleRemoveTag = (tag:Tag) => {
-    setEquipment({...equipment, tags:[...equipment.tags].filter(t=> t !== tag)})
+  const handleRemoveTag = (tag: Tag) => {
+    setEquipment({ ...equipment, tags: [...equipment.tags].filter(t => t !== tag) });
   };
 
   const handleAddUsage = () => {
-    setUsages([...usages, {
-      name: 'New Usage',
-      description: '',
-      muscles: [],
-      steps: [],
-      medias: [],
-    }]);
+    setUsages([
+      ...usages,
+      {
+        name: 'New Usage',
+        description: '',
+        muscles: [],
+        steps: [],
+        medias: [],
+      },
+    ]);
   };
 
-  const updateUsage = (usage:Usage) => {
+  const updateUsage = (usage: Usage) => {
     const newUsages = [...usages];
     newUsages[selectedUsageIdx] = usage;
     setUsages(newUsages);
-  }
+  };
 
   const handleAddStep = (usageIdx: number) => {
     setSelectedUsageIdx(usageIdx);
     const newUsages = [...usages];
-    newUsages[usageIdx].steps = [...newUsages[usageIdx].steps, {
-      title: 'New Step',
-      instruction: '',
-      setUp: false,
-      medias: [],
-    }];
-    setSelectedStepIdx(newUsages[usageIdx].steps.length -1);
+    newUsages[usageIdx].steps = [
+      ...newUsages[usageIdx].steps,
+      {
+        title: 'New Step',
+        instruction: '',
+        setUp: false,
+        medias: [],
+      },
+    ];
+    setSelectedStepIdx(newUsages[usageIdx].steps.length - 1);
     setUsages(newUsages);
+  };
 
-  }
-
-  const updateStep = (step:Step) => {
-    console.log('updated step: ', step)
+  const updateStep = (step: Step) => {
+    console.log('updated step: ', step);
     const newUsages = [...usages];
     newUsages[selectedUsageIdx].steps[selectedStepIdx] = step;
     setUsages(newUsages);
     setSelectedStepIdx(-1);
     setSelectedUsageIdx(-1);
-  }
+  };
 
   return (
     <>
@@ -176,7 +182,7 @@ export default function EquipmentPage() {
               <div className="mb-2 block h-10 py-2">
                 <Label htmlFor="media">Select Media</Label>
               </div>
-              <MediaDialog attachMediaHandler={setSelectedMedia}/>
+              <MediaDialog attachMediaHandler={setSelectedMedia} />
             </div>
             <div className="flex flex-wrap">
               {selectedMedia.map(media => (
@@ -203,40 +209,66 @@ export default function EquipmentPage() {
               <div className="mb-2 block h-10 py-2">
                 <Label htmlFor="usages">Usages</Label>
               </div>
-              <Button onClick={()=>handleAddUsage()} variant="ghost" size="sm">
+              <Button onClick={() => handleAddUsage()} variant="ghost" size="sm">
                 <SquarePlus className=" h-5 w-5" />
               </Button>
             </div>
             <div className="mt-3">
               <Table striped>
                 <TableHead>
-                <TableRow>
-                  <TableHeadCell>Usage Name</TableHeadCell>
-                  <TableHeadCell>Steps Name</TableHeadCell>
-                  <TableHeadCell> </TableHeadCell>
-                </TableRow>
-              </TableHead>
+                  <TableRow>
+                    <TableHeadCell>Usage Name</TableHeadCell>
+                    <TableHeadCell>Steps Name</TableHeadCell>
+                    <TableHeadCell> </TableHeadCell>
+                  </TableRow>
+                </TableHead>
                 <TableBody>
                   {usages.map((usage, idx) => (
                     <TableRow key={idx}>
                       <TableCell>{usage.name}</TableCell>
-                      <TableCell>{usage.steps.map((step, stepIdx) => <div key={stepIdx} className="cursor-pointer" onClick={() => {
-                        setSelectedUsageIdx(idx);
-                        setSelectedStepIdx(stepIdx);
-                      }}>{step.title}</div>)}</TableCell>
                       <TableCell>
-                        <Button onClick={() => {
-                          setSelectedUsageIdx(idx);
-                          setSelectedStepIdx(-1);
-                        }} variant="secondary" size="sm" className="me-5">Edit</Button>
-                        <Button onClick={() => handleAddStep(idx)} variant="secondary" size="sm">+ Step</Button>
+                        {usage.steps.map((step, stepIdx) => (
+                          <div
+                            key={stepIdx}
+                            className="cursor-pointer"
+                            onClick={() => {
+                              setSelectedUsageIdx(idx);
+                              setSelectedStepIdx(stepIdx);
+                            }}
+                          >
+                            {step.title}
+                          </div>
+                        ))}
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          onClick={() => {
+                            setSelectedUsageIdx(idx);
+                            setSelectedStepIdx(-1);
+                          }}
+                          variant="secondary"
+                          size="sm"
+                          className="me-5"
+                        >
+                          Edit
+                        </Button>
+                        <Button onClick={() => handleAddStep(idx)} variant="secondary" size="sm">
+                          + Step
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-              {selectedUsageIdx >= 0 && selectedStepIdx < 0  && <UsageEdit usage={usages[selectedUsageIdx]} updateUsageHandler={updateUsage}/>}
-              {selectedStepIdx >= 0 && <StepEdit step={usages[selectedUsageIdx].steps[selectedStepIdx]} updateStepHandler={updateStep}/>}
+              {selectedUsageIdx >= 0 && selectedStepIdx < 0 && (
+                <UsageEdit usage={usages[selectedUsageIdx]} updateUsageHandler={updateUsage} />
+              )}
+              {selectedStepIdx >= 0 && (
+                <StepEdit
+                  step={usages[selectedUsageIdx].steps[selectedStepIdx]}
+                  updateStepHandler={updateStep}
+                />
+              )}
             </div>
             <div className="flex justify-evenly">
               <Button onClick={onSave}>Save </Button>

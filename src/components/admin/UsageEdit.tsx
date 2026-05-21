@@ -13,7 +13,7 @@ const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 type UsageEditProps = {
   usage: Usage;
-  updateUsageHandler: (usage: Usage) => void
+  updateUsageHandler: (usage: Usage) => void;
 };
 
 export default function UsageEdit({ usage, updateUsageHandler }: UsageEditProps) {
@@ -21,11 +21,11 @@ export default function UsageEdit({ usage, updateUsageHandler }: UsageEditProps)
   const [selectedMuscle, setSelectedMuscle] = useState<Muscle | undefined>();
 
   const setSelectedMedia = (medias: Media[]) => {
-    updateUsageHandler({...usage, medias: medias})
-  }
+    updateUsageHandler({ ...usage, medias: medias });
+  };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
   ) => {
     updateUsageHandler({ ...usage, [e.target.id]: e.target.value });
   };
@@ -42,12 +42,12 @@ export default function UsageEdit({ usage, updateUsageHandler }: UsageEditProps)
 
   const handleAddMuscle = () => {
     if (selectedMuscle && !usage.muscles.includes(selectedMuscle!)) {
-      updateUsageHandler({...usage, muscles: [...usage.muscles, selectedMuscle]});
+      updateUsageHandler({ ...usage, muscles: [...usage.muscles, selectedMuscle] });
     }
   };
 
   const handleRemoveMuscle = (m: Muscle) => {
-    updateUsageHandler({...usage, muscles: usage.muscles.filter(muscle => muscle !== m)});
+    updateUsageHandler({ ...usage, muscles: usage.muscles.filter(muscle => muscle !== m) });
   };
 
   return (
@@ -58,13 +58,25 @@ export default function UsageEdit({ usage, updateUsageHandler }: UsageEditProps)
             <div className="mb-2 block">
               <Label htmlFor="name">Name</Label>
             </div>
-            <TextInput id="name" type="text" sizing="lg" onChange={handleChange} value={usage.name} />
+            <TextInput
+              id="name"
+              type="text"
+              sizing="lg"
+              onChange={handleChange}
+              value={usage.name}
+            />
           </div>
           <div>
             <div className="mb-2 block">
               <Label htmlFor="description">Description</Label>
             </div>
-            <TextInput id="description" type="text" sizing="lg" onChange={handleChange} value={usage.description}/>
+            <TextInput
+              id="description"
+              type="text"
+              sizing="lg"
+              onChange={handleChange}
+              value={usage.description}
+            />
           </div>
           <div>
             <div className="mb-2 block">
@@ -88,9 +100,9 @@ export default function UsageEdit({ usage, updateUsageHandler }: UsageEditProps)
                   key={m.id}
                   className="me-1 inline-flex items-center rounded-md bg-pink-400/10 px-2 py-1 text-xs font-medium text-pink-400 inset-ring inset-ring-pink-400/20"
                 >
-                    {m.name}
+                  {m.name}
                   <X onClick={() => handleRemoveMuscle(m)} className="h-4 w-4 cursor-pointer" />
-                  </span>
+                </span>
               ))}
             </div>
           </div>
@@ -126,6 +138,5 @@ export default function UsageEdit({ usage, updateUsageHandler }: UsageEditProps)
         </div>
       </div>
     </>
-  )
-    ;
+  );
 }

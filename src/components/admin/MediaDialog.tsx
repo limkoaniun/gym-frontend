@@ -8,7 +8,6 @@ import { getAllMedias } from '@/lib/api/media';
 import { Media } from '@/lib/interfaces';
 import Image from 'next/image';
 
-
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 type MediaDialogProps = {
@@ -29,7 +28,7 @@ export default function MediaDialog({ attachMediaHandler }: MediaDialogProps) {
   return (
     <>
       <Button onClick={() => setOpenModal(true)} variant="ghost" size="sm">
-        <SquarePlus className=" h-5 w-5"/>
+        <SquarePlus className=" h-5 w-5" />
       </Button>
       <Modal size="7xl" show={openModal} onClose={() => setOpenModal(false)}>
         <ModalHeader>Select Medias</ModalHeader>
