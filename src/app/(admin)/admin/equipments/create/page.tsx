@@ -218,9 +218,9 @@ export default function EquipmentPage() {
               </TableHead>
                 <TableBody>
                   {usages.map((usage, idx) => (
-                    <TableRow>
+                    <TableRow key={idx}>
                       <TableCell>{usage.name}</TableCell>
-                      <TableCell>{usage.steps.map((step, stepIdx) => <div className="cursor-pointer" onClick={() => {
+                      <TableCell>{usage.steps.map((step, stepIdx) => <div key={stepIdx} className="cursor-pointer" onClick={() => {
                         setSelectedUsageIdx(idx);
                         setSelectedStepIdx(stepIdx);
                       }}>{step.title}</div>)}</TableCell>
