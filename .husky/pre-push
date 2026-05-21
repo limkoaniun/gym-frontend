@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -e
+
+echo "▶ Type-check (tsc --noEmit)"
+npm run typecheck
+
+echo "▶ Lint (next lint)"
+npm run lint
+
+echo "✓ Pre-push checks passed"
