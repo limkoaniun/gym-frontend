@@ -2,3 +2,9 @@
 .next/
 node_modules/
 .DS_Store
+
+# Per-developer Claude Code permission allowlist (shared settings.json may still be committed)
+.claude/settings.local.json
+
+# Leftover empty marker
+.modified
