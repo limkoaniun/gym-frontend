@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import MediaDialog from '@/components/admin/MediaDialog';
 import { Media, Step } from '@/lib/interfaces';
-import { Card, Label, TextInput, Dropdown, DropdownItem } from 'flowbite-react';
+import { Card, Label, TextInput} from 'flowbite-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { Check, X } from 'lucide-react';
 
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -110,9 +111,9 @@ export default function StepEdit({ step, updateStepHandler }: StepEditProps) {
               ))}
             </div>
           </div>
-          <div className="flex justify-evenly">
-            <Button onClick={() => updateStepHandler(editingStep)}>Save </Button>
-            <Button>Close </Button>
+          <div className="flex justify-end ">
+            <Button onClick={() => updateStepHandler(editingStep)} className="me-3"> <Check /> </Button>
+            <Button variant="secondary" > <X /> </Button>
           </div>
         </div>
       </div>
