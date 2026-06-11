@@ -53,7 +53,7 @@ export default function Page() {
     fetchEquipmentViaImageSearching(file);
   };
 
-  const handleClick = (id: number | string) => {
+  const handleClick = (id?: number | string) => {
     router.push(`/equipments/${id}`);
   };
 

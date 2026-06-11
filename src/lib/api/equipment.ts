@@ -1,5 +1,5 @@
 import api from '../axios';
-import { Equipment, Muscle, Usage, User } from '@/lib/interfaces';
+import { Equipment, Media, Usage, User } from '@/lib/interfaces';
 
 export async function searchEquipments(query?: string): Promise<Equipment[]> {
   let res;
@@ -25,7 +25,7 @@ export async function searchEquipmentsByImage(file: File): Promise<Equipment[]> 
   return res.data;
 }
 
-export async function fetchEquipmentById(id: string): Promise<Equipment> {
+export async function fetchEquipmentById(id?: string): Promise<Equipment> {
   const res = await api.get(`/equipments/${id}`);
   return res.data;
 }
@@ -42,5 +42,20 @@ export async function addFavoriteEquipments(equipmentId: string): Promise<User> 
 
 export async function createEquipment(equipment: Equipment): Promise<Equipment> {
   const res = await api.post(`/equipments`, equipment);
+  return res.data;
+}
+
+export async function getAllEquipments(): Promise<Equipment[]> {
+  const res = await api.get('/equipments');
+  return res.data;
+}
+
+export async function delEquipment(id: string | Array<string>): Promise<boolean> {
+  const res = await api.delete(`/equipments/${id}`);
+  return res.data;
+}
+
+export async function updateEquipment(equipment:Equipment): Promise<Equipment> {
+  const res = await api.put(`equipments/${equipment.id}`, equipment);
   return res.data;
 }
