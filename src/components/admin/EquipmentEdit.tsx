@@ -4,37 +4,36 @@ import { Dumbbell, SquarePlus, X } from 'lucide-react';
 import AdminHeader from '@/components/admin/AdminHeader';
 import React, { useEffect, useState } from 'react';
 import MediaDialog from '@/components/admin/MediaDialog';
-import { Equipment, Media, Tag, Usage, Step } from '@/lib/interfaces';
+import { Equipment, Media, Step, Tag, Usage } from '@/lib/interfaces';
 import {
   Card,
-  Label,
-  TextInput,
   Dropdown,
   DropdownItem,
+  Label,
   Table,
-  TableRow,
-  TableHeadCell,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+  TextInput,
 } from 'flowbite-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { createEquipment, updateEquipment} from '@/lib/api/equipment';
+import { createEquipment, updateEquipment } from '@/lib/api/equipment';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { getAllTags } from '@/lib/api/tag';
 import UsageEdit from '@/components/admin/UsageEdit';
 import StepEdit from '@/components/admin/StepEdit';
 
-
 const API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 type EquipmentCreatePageProps = {
-  existingEquipment?: Equipment,
+  existingEquipment?: Equipment;
 };
 
-export default function EquipmentEdit({existingEquipment}: EquipmentCreatePageProps) {
+export default function EquipmentEdit({ existingEquipment }: EquipmentCreatePageProps) {
   const [selectedMedias, setSelectedMedias] = useState<Media[]>([]);
   const [equipment, setEquipment] = useState<Equipment>({
     description: '',
@@ -50,10 +49,10 @@ export default function EquipmentEdit({existingEquipment}: EquipmentCreatePagePr
   const [selectedStepIdx, setSelectedStepIdx] = useState<number>(-1);
 
   useEffect(() => {
-    if(existingEquipment){
+    if (existingEquipment) {
       setEquipment(existingEquipment);
       setUsages(existingEquipment.usages);
-      setSelectedMedias((existingEquipment.medias))
+      setSelectedMedias(existingEquipment.medias);
     }
   }, [existingEquipment]);
   const fetchAllTags = () => {
@@ -70,17 +69,16 @@ export default function EquipmentEdit({existingEquipment}: EquipmentCreatePagePr
 
   const onSave = () => {
     console.log({ ...equipment, medias: selectedMedias, usages: usages });
-    if(existingEquipment){
+    if (existingEquipment) {
       updateEquipment({ ...equipment, medias: selectedMedias, usages: usages })
         .then(data => {
-        setEquipment(data);
-        toast.success('The Equipment has been update.');
-      })
+          setEquipment(data);
+          toast.success('The Equipment has been update.');
+        })
         .catch(error => {
-        toast.error(error.response.data.error);
-      });
-    }
-    else {
+          toast.error(error.response.data.error);
+        });
+    } else {
       createEquipment({ ...equipment, medias: selectedMedias, usages: usages })
         .then(data => {
           setEquipment(data);
@@ -166,13 +164,25 @@ export default function EquipmentEdit({existingEquipment}: EquipmentCreatePagePr
               <div className="mb-2 block">
                 <Label htmlFor="equipmentName">Equipment name</Label>
               </div>
-              <TextInput id="name" type="text" sizing="lg" onChange={handleChange} value={equipment?.name}/>
+              <TextInput
+                id="name"
+                type="text"
+                sizing="lg"
+                onChange={handleChange}
+                value={equipment?.name}
+              />
             </div>
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="description">Description</Label>
               </div>
-              <TextInput id="description" type="text" sizing="lg" onChange={handleChange} value={equipment?.description}/>
+              <TextInput
+                id="description"
+                type="text"
+                sizing="lg"
+                onChange={handleChange}
+                value={equipment?.description}
+              />
             </div>
             <div>
               <div className="mb-2 block">
@@ -248,11 +258,12 @@ export default function EquipmentEdit({existingEquipment}: EquipmentCreatePagePr
                 </TableHead>
                 <TableBody>
                   {usages.map((usage, idx) => (
-                    <TableRow>
+                    <TableRow key={usage.id}>
                       <TableCell>{usage.name}</TableCell>
                       <TableCell>
                         {usage.steps.map((step, stepIdx) => (
                           <div
+                            key={step.id}
                             className="cursor-pointer"
                             onClick={() => {
                               setSelectedUsageIdx(idx);
@@ -294,8 +305,12 @@ export default function EquipmentEdit({existingEquipment}: EquipmentCreatePagePr
               )}
             </div>
             <div className="flex justify-evenly">
-              <Button onClick={onSave} variant="cta">Save </Button>
-              <Button onClick={onBack} variant="outline">Back </Button>
+              <Button onClick={onSave} variant="cta">
+                Save{' '}
+              </Button>
+              <Button onClick={onBack} variant="outline">
+                Back{' '}
+              </Button>
             </div>
           </div>
         </Card>

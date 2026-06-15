@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { fetchEquipmentById } from '@/lib/api/equipment';
 import EquipmentEdit from '@/components/admin/EquipmentEdit';
 
-export default function EquipmentEditPage(){
+export default function EquipmentEditPage() {
   const params = useParams();
   const [equipment, setEquipment] = useState<Equipment>({
     description: '',
@@ -15,12 +15,14 @@ export default function EquipmentEditPage(){
     tags: [],
     usages: [],
   });
+
   useEffect(() => {
     fetchEquipmentById(params.id as string).then(data => setEquipment(data));
-  }, []);
-  return(
+  }, [params.id]);
+
+  return (
     <>
       <EquipmentEdit existingEquipment={equipment} />
     </>
-  )
+  );
 }

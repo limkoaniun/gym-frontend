@@ -1,11 +1,19 @@
 'use client';
 
-import { Dumbbell, Trash2, SquarePen, Plus, Search } from 'lucide-react';
+import { Dumbbell, Plus, Search, SquarePen, Trash2 } from 'lucide-react';
 import AdminHeader from '@/components/admin/AdminHeader';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Table, TableHead, TableHeadCell, TableRow, TableBody, TableCell, TextInput } from 'flowbite-react';
-import { Equipment} from '@/lib/interfaces';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+  TextInput,
+} from 'flowbite-react';
+import { Equipment } from '@/lib/interfaces';
 import { delEquipment, getAllEquipments } from '@/lib/api/equipment';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
@@ -26,11 +34,7 @@ export default function EquipmentPage() {
       return;
     }
 
-    setResults(
-      data.filter(equipment =>
-        equipment.name.toLowerCase().includes(keyword)
-      )
-    );
+    setResults(data.filter(equipment => equipment.name.toLowerCase().includes(keyword)));
   };
 
   const fetchEquipments = () => {
@@ -43,21 +47,20 @@ export default function EquipmentPage() {
   useEffect(fetchEquipments, []);
 
   const handleDelClick = (currentId?: number) => {
-    if(currentId) {
-      if(confirm('Are you sure to delete this equipment?')) {
+    if (currentId) {
+      if (confirm('Are you sure to delete this equipment?')) {
         delEquipment(String(currentId)).then(data => {
-          if(data){
+          if (data) {
             fetchEquipments();
 
             toast.success('The equipment has been deleted successfully');
+          } else {
+            toast.error('Cannot delete the Equipment.');
           }
-          else {
-            toast.error('Cannot delete the Equipment.')
-          }
-        })
+        });
       }
     }
-  }
+  };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -80,10 +83,10 @@ export default function EquipmentPage() {
         </div>
         <div>
           <Button variant="cta" size="sm">
-          <Link href="equipments/create" className="flex">
-            <Plus className="mr-2 h-5 w-5"/> Create
-          </Link>
-        </Button>
+            <Link href="equipments/create" className="flex">
+              <Plus className="mr-2 h-5 w-5" /> Create
+            </Link>
+          </Button>
         </div>
       </div>
       <div className="m-8">
@@ -99,7 +102,7 @@ export default function EquipmentPage() {
           </TableHead>
           <TableBody>
             {results.map(equipment => (
-              <TableRow>
+              <TableRow key={equipment.id}>
                 <TableCell>{equipment.id}</TableCell>
                 <TableCell>{equipment.name}</TableCell>
                 <TableCell>{equipment.description}</TableCell>
@@ -113,9 +116,12 @@ export default function EquipmentPage() {
                   />
                 </TableCell>
                 <TableCell className="flex mt-6">
-                  <Trash2 className="me-3 cursor-pointer" onClick={() => handleDelClick(equipment.id)}/>
+                  <Trash2
+                    className="me-3 cursor-pointer"
+                    onClick={() => handleDelClick(equipment.id)}
+                  />
                   <Link href={`/admin/equipments/${equipment.id}`}>
-                    <SquarePen className="cursor-pointer"/>
+                    <SquarePen className="cursor-pointer" />
                   </Link>
                 </TableCell>
               </TableRow>
