@@ -22,22 +22,34 @@ export default function TagsPage() {
   const [results, setResults] = useState<Tag[]>([]);
   const [editingTag, setEditingTag] = useState<Tag | undefined>();
   const [editingTagName, setEditingTagName] = useState<string>('');
+  const [keyword, setKeyword] = useState('');
+
+  const applySearch = (data: Tag[], searchText: string) => {
+    const keyword = searchText.trim().toLowerCase();
+    if (!keyword) {
+      setResults(data);
+      return;
+    }
+    setResults(data.filter(tag => tag.name.toLowerCase().includes(keyword)));
+  };
+
   useEffect(() => {
     fetchTagsFromApi();
   }, []);
+
   const fetchTagsFromApi = () => {
     getAllTags().then(data => {
-      setAllTags(data as Tag[]);
-      setResults(data as Tag[]);
+      setAllTags(data);
+      applySearch(data, keyword);
     });
   };
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const keyword = e.target.value.trim().toLowerCase();
-    const results = allTags.filter(tag => {
-      return tag.name.toLowerCase().includes(keyword);
-    });
-    setResults(results);
+    const value = e.target.value;
+    setKeyword(value);
+    applySearch(allTags, value);
   };
+
   const handleDelClick = (currentId?: number) => {
     if (currentId) {
       if (confirm('Are you sure to delete this tag?')) {
@@ -52,21 +64,24 @@ export default function TagsPage() {
       }
     }
   };
+
   const handleAddClick = () => {
     const newTag = { id: 0, name: editingTagName };
     setResults([...allTags, newTag]);
     setEditingTag(newTag);
   };
+
   const handleTagNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditingTagName(e.target.value);
   };
+
   const handleSaveClick = () => {
     const newTag: Tag = { ...editingTag, name: editingTagName };
-      addTag(newTag).then(() => {
-        fetchTagsFromApi();
-        toast.success('The tag has been added.');
-        setEditingTagName('');
-      });
+    addTag(newTag).then(() => {
+      fetchTagsFromApi();
+      toast.success('The tag has been added.');
+      setEditingTagName('');
+    });
   };
 
   return (
@@ -109,10 +124,12 @@ export default function TagsPage() {
                       <button onClick={handleSaveClick}>
                         <CircleCheck />
                       </button>
-                      <button onClick={() => {
-                        setEditingTag(undefined);
-                        setResults(results.filter(tag=>tag.id !== 0));
-                      }}>
+                      <button
+                        onClick={() => {
+                          setEditingTag(undefined);
+                          setResults(results.filter(tag => tag.id !== 0));
+                        }}
+                      >
                         <CircleX />
                       </button>
                     </div>
