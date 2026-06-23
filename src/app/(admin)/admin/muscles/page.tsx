@@ -1,18 +1,26 @@
 'use client';
 
-import { Bone, CircleCheck, CircleX, Plus, Search, SquarePen, Trash2 } from 'lucide-react';
+import { Bone, CircleCheck, CircleX, Plus, Search, Trash2 } from 'lucide-react';
 import AdminHeader from '@/components/admin/AdminHeader';
 import React, { useEffect, useState } from 'react';
 import { Muscle } from '@/lib/interfaces';
 import { createMuscle, deleteMuscle, getAllMuscles } from '@/lib/api/muscle';
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow, TextInput } from 'flowbite-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+  TextInput,
+} from 'flowbite-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
 
 export default function MusclesPage() {
   const [muscles, setMuscles] = useState<Muscle[]>([]);
   const [editingMuscle, setEditingMuscle] = useState<Muscle>();
-  const [editingMuscleName, setEditingMuscleName] = useState<string>('')
+  const [editingMuscleName, setEditingMuscleName] = useState<string>('');
   const [results, setResults] = useState<Muscle[]>([]);
   const [keyword, setKeyword] = useState('');
 
@@ -24,11 +32,7 @@ export default function MusclesPage() {
       return;
     }
 
-    setResults(
-      data.filter(m =>
-        m.name.toLowerCase().includes(keyword)
-      )
-    );
+    setResults(data.filter(m => m.name.toLowerCase().includes(keyword)));
   };
 
   const fetchAllMuscles = () => {
@@ -39,11 +43,11 @@ export default function MusclesPage() {
   };
 
   useEffect(() => {
-    fetchAllMuscles()
+    fetchAllMuscles();
   }, []);
 
   const handleAddMuscle = () => {
-    const newMuscle = {id:0, name:editingMuscleName};
+    const newMuscle = { id: 0, name: editingMuscleName };
     setEditingMuscle(newMuscle);
     setResults([...muscles, newMuscle]);
   };
@@ -61,22 +65,20 @@ export default function MusclesPage() {
         } else {
           toast.error('Cannot delete the muscle.');
         }
-      })
+      });
     }
-  }
+  };
 
   const handleSave = () => {
-    const newMuscle: Muscle = {...editingMuscle, name: editingMuscleName};
+    const newMuscle: Muscle = { ...editingMuscle, name: editingMuscleName };
     createMuscle(newMuscle).then(() => {
       fetchAllMuscles();
       toast.success('The muscle has been added.');
-      setEditingMuscleName("");
+      setEditingMuscleName('');
     });
   };
 
-  const handleSearchChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setKeyword(value);
     applySearch(muscles, value);
@@ -113,34 +115,38 @@ export default function MusclesPage() {
                 <TableCell>{m.id}</TableCell>
                 <TableCell>
                   {editingMuscle?.id === m.id ? (
-                      <div className="flex">
-                        <TextInput
-                          type="text"
-                          value={editingMuscleName}
-                          onChange={handleMuscleNameChange}
-                        />
-                        <button onClick={handleSave}>
-                          <CircleCheck />
-                        </button>
-                        <button onClick={() => {
+                    <div className="flex">
+                      <TextInput
+                        type="text"
+                        value={editingMuscleName}
+                        onChange={handleMuscleNameChange}
+                      />
+                      <button onClick={handleSave}>
+                        <CircleCheck />
+                      </button>
+                      <button
+                        onClick={() => {
                           setEditingMuscle(undefined);
-                          setResults(results.filter(m=> m.id !==0));
-                        }}>
-                          <CircleX />
-                        </button>
-                      </div>
-                      ):(m.name)}
+                          setResults(results.filter(m => m.id !== 0));
+                        }}
+                      >
+                        <CircleX />
+                      </button>
+                    </div>
+                  ) : (
+                    m.name
+                  )}
                 </TableCell>
                 <TableCell>
                   <button onClick={() => handleDel(m.id!)}>
-                    <Trash2/>
+                    <Trash2 />
                   </button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
-          </Table>
+        </Table>
       </div>
     </>
-  )
+  );
 }
