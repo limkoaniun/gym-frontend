@@ -53,7 +53,7 @@ export default function TagsPage() {
     }
   };
   const handleAddClick = () => {
-    const newTag = { id: 1000, name: editingTagName };
+    const newTag = { id: 0, name: editingTagName };
     setResults([...allTags, newTag]);
     setEditingTag(newTag);
   };
@@ -62,13 +62,13 @@ export default function TagsPage() {
   };
   const handleSaveClick = () => {
     const newTag: Tag = { ...editingTag, name: editingTagName };
-    if (newTag) {
       addTag(newTag).then(() => {
         fetchTagsFromApi();
         toast.success('The tag has been added.');
+        setEditingTagName('');
       });
-    }
   };
+
   return (
     <>
       <AdminHeader title="Tags" icon={<Tags />} subtitle="Manage Tags" />
@@ -109,7 +109,10 @@ export default function TagsPage() {
                       <button onClick={handleSaveClick}>
                         <CircleCheck />
                       </button>
-                      <button onClick={() => setEditingTag(undefined)}>
+                      <button onClick={() => {
+                        setEditingTag(undefined);
+                        setResults(results.filter(tag=>tag.id !== 0));
+                      }}>
                         <CircleX />
                       </button>
                     </div>
