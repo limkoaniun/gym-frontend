@@ -1,8 +1,17 @@
-import { Muscle } from '@/lib/interfaces';
+import { Muscle, PageResponse } from '@/lib/interfaces';
 import api from '@/lib/axios';
 
+export async function getAllMusclesInPage(
+  pageSize: number,
+  currentPage: number,
+  keyword?: string
+): Promise<PageResponse<Muscle>> {
+  const res = await api.get('/muscles', { params: { pageSize, currentPage, keyword } });
+  return res.data;
+}
+
 export async function getAllMuscles(): Promise<Muscle[]> {
-  const res = await api.get('/muscles');
+  const res = await api.get('/muscles/all');
   return res.data;
 }
 

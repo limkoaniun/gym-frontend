@@ -4,7 +4,7 @@ import { Bone, CircleCheck, CircleX, Plus, Search, Trash2 } from 'lucide-react';
 import AdminHeader from '@/components/admin/AdminHeader';
 import React, { useEffect, useState } from 'react';
 import { Muscle } from '@/lib/interfaces';
-import { createMuscle, deleteMuscle, getAllMuscles } from '@/lib/api/muscle';
+import { createMuscle, deleteMuscle, getAllMusclesInPage } from '@/lib/api/muscle';
 import {
   Table,
   TableBody,
@@ -16,6 +16,7 @@ import {
 } from 'flowbite-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
+import { Pagination } from 'flowbite-react';
 
 export default function MusclesPage() {
   const [muscles, setMuscles] = useState<Muscle[]>([]);
@@ -23,28 +24,33 @@ export default function MusclesPage() {
   const [editingMuscleName, setEditingMuscleName] = useState<string>('');
   const [results, setResults] = useState<Muscle[]>([]);
   const [keyword, setKeyword] = useState('');
-
-  const applySearch = (data: Muscle[], searchText: string) => {
-    const keyword = searchText.trim().toLowerCase();
-
-    if (!keyword) {
-      setResults(data);
-      return;
-    }
-
-    setResults(data.filter(m => m.name.toLowerCase().includes(keyword)));
-  };
-
-  const fetchAllMuscles = () => {
-    getAllMuscles().then(data => {
-      setMuscles(data);
-      applySearch(data, keyword);
-    });
-  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const PAGE_SIZE = 10;
 
   useEffect(() => {
-    fetchAllMuscles();
+    fetchAllMuscles(currentPage, keyword);
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchAllMuscles(1, keyword);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [keyword]);
+
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+    fetchAllMuscles(page, keyword);
+  };
+
+  const fetchAllMuscles = (page: number, searchKeyword: string) => {
+    getAllMusclesInPage(PAGE_SIZE, page - 1, searchKeyword).then(data => {
+      setMuscles(data.content);
+      setResults(data.content);
+      setTotalPages(data.totalPages);
+    });
+  };
 
   const handleAddMuscle = () => {
     const newMuscle = { id: 0, name: editingMuscleName };
@@ -60,7 +66,7 @@ export default function MusclesPage() {
     if (confirm('Are you sure to delete the muscle?')) {
       deleteMuscle(String(id)).then(data => {
         if (data) {
-          fetchAllMuscles();
+          fetchAllMuscles(currentPage, keyword);
           toast.success('The muscle has been deleted successfully');
         } else {
           toast.error('Cannot delete the muscle.');
@@ -72,7 +78,7 @@ export default function MusclesPage() {
   const handleSave = () => {
     const newMuscle: Muscle = { ...editingMuscle, name: editingMuscleName };
     createMuscle(newMuscle).then(() => {
-      fetchAllMuscles();
+      fetchAllMuscles(currentPage, keyword);
       toast.success('The muscle has been added.');
       setEditingMuscleName('');
     });
@@ -81,7 +87,7 @@ export default function MusclesPage() {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setKeyword(value);
-    applySearch(muscles, value);
+    setCurrentPage(1);
   };
 
   return (
@@ -146,6 +152,14 @@ export default function MusclesPage() {
             ))}
           </TableBody>
         </Table>
+        <div className="flex overflow-x-auto sm:justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+            showIcons
+          />
+        </div>
       </div>
     </>
   );
