@@ -4,6 +4,7 @@ import { Users, Eye, Mail, Search, Plus } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import AdminHeader from '@/components/admin/AdminHeader';
 import {
+  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -14,36 +15,50 @@ import {
 } from 'flowbite-react';
 import { Button } from '@/components/ui/button';
 import { User } from '@/lib/interfaces';
-import { getAllUsers } from '@/lib/api/user';
+import { getAllUsersInPage } from '@/lib/api/user';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function UsersPage() {
-  const [allUsers, setAllUsers] = useState<User[]>([]);
   const [results, setResults] = useState<User[]>([]);
+  const [keyword, setKeyword] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const PAGE_SIZE = 10;
+
   const router = useRouter();
-  const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const keyword = e.target.value.trim().toLowerCase();
-    const arr = allUsers.filter(user => {
-      return (
-        user.email.toLowerCase().includes(keyword) || user.username.toLowerCase().includes(keyword)
-      );
-    });
-    setResults(arr);
-  };
+
   const handleAddUser = () => {
     router.push(`/admin/users/create`);
   };
 
   useEffect(() => {
-    fetchUserFromApi();
+    fetchUserFromApi(currentPage, keyword);
   }, []);
 
-  const fetchUserFromApi = () => {
-    getAllUsers().then((data: User[]) => {
-      setAllUsers(data);
-      setResults(data);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchUserFromApi(1, keyword);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [keyword]);
+
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+    fetchUserFromApi(page, keyword);
+  };
+
+  const fetchUserFromApi = (page: number, searchKeyword: string) => {
+    getAllUsersInPage(PAGE_SIZE, page - 1, searchKeyword).then(data => {
+      setResults(data.content);
+      setTotalPages(data.totalPages);
     });
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setKeyword(value);
+    setCurrentPage(1);
   };
 
   return (
@@ -51,7 +66,7 @@ export default function UsersPage() {
       <AdminHeader title="User" icon={<Users />} subtitle="Manage gym app users" />
       <div className="flex m-8 justify-between pr-5">
         <TextInput
-          onChange={handleKeywordChange}
+          onChange={handleSearchChange}
           icon={Search}
           type="text"
           placeholder="Search users..."
@@ -97,6 +112,14 @@ export default function UsersPage() {
             ))}
           </TableBody>
         </Table>
+        <div className="flex overflow-x-auto sm:justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+            showIcons
+          />
+        </div>
       </div>
     </>
   );
